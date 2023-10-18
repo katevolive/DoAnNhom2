@@ -91,11 +91,9 @@
             <div class="giohang-header" id="CartCount">
                 <a asp-action="Index" asp-controller="GioHang"><img class="cart" src="~/img/cart.png" alt=""></a>
             </div>
-           
                  <div class="dangnhap-button">
                 <a asp-action="UserDashboard" asp-controller="Home" style="text-decoration: none;"><i class="ti-user"></i> @Context.Session.GetString("TenKh").ToString()</a>
             </div>
-            
             }
             else
             {
