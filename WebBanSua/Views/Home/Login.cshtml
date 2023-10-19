@@ -9,6 +9,12 @@
     <title>Đăng Nhập</title>
     <link rel="stylesheet" href="~/css/css_login.css">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .text-danger {
+    color: red;      /* Đặt màu chữ là đỏ */
+    font-size: 20px;  /* Đặt kích thước chữ là 20px */
+}
+    </style>
 </head>
 <body>
      <form asp-action="Login" class="container-login">
@@ -20,6 +26,9 @@
             <span class="login-social-text">Đăng nhập với Google</span>
         </button>
         <div class="login-or"><span>Or</span></div>
+        <div>
+            <span class="text-danger">@Html.ValidationSummary()</span>
+        </div>
         <label asp-for="Email" class="control-label login-label"></label>
          <input asp-for="Email" class="form-control login-input" />
          <span asp-validation-for="Email" class="text-danger"></span>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using WebBanSua.Models;
 
@@ -8,14 +9,14 @@ namespace WebBanSua.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : Controller
     {
-       
+
 
         private readonly CuaHangBanSuaContext _context;
 
         public HomeController(CuaHangBanSuaContext context)
         {
             _context = context;
-          
+
         }
         public IActionResult Index()
         {
@@ -29,8 +30,8 @@ namespace WebBanSua.Areas.Admin.Controllers
 
             return View(customerUser);
         }
-       
-  
+
+
         [HttpPost]
         public IActionResult AdminProfile(KhachHang customer, Account user)
         {
@@ -80,6 +81,25 @@ namespace WebBanSua.Areas.Admin.Controllers
                 return View(customer);
             }
         }
+        public IActionResult DanhMuc()
+        {
+            using (var dbContext = new CuaHangBanSuaContext())
+            {
+                var danhMuc = dbContext.DanhMucSps
+                    .Join(
+                        dbContext.SanPhams,
+                        dm => dm.MaDm,
+                        sp => sp.MaDm,
+                        (dm, sp) => new
+                        {
+                            tenDm = dm.TenDm,
+                            anhDm = dm.AnhDm,
+                            soLuong = sp.SoLuong
+                        })
+                    .ToList();
 
+                return View(danhMuc);
+            }
+        }
     }
 }

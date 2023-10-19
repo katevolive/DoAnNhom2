@@ -199,9 +199,9 @@ namespace WebBanSua.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Đăng Nhập Thất Bại! Kiểm Lại Thông Tin Đăng Nhập");
-
-                   // return RedirectToAction("Login");
+                    ModelState.AddModelError("1", "Đăng Nhập Thất Bại!"); 
+                    ModelState.AddModelError("1", "Kiểm Lại Thông Tin Đăng Nhập!");
+                    return View();
                 }
             }
             return View();
