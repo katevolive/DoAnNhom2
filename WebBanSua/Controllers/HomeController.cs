@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using WebBanSua.Models;
 namespace WebBanSua.Controllers
@@ -142,12 +139,10 @@ namespace WebBanSua.Controllers
                     ModelState.AddModelError("", "Số điện thoại đã tồn tại");
                     return View(khachhang);
                 }
-                
                     user.TaiKhoan = khachhang.Email;
                     user.RoleId = 3;
                     user.CreateDate = DateTime.Now;
                     khachhang.CreateDate = DateTime.Now;
-                    HttpContext.Session.SetString("MaKh", khachhang.MaKh.ToString());
                     HttpContext.Session.SetString("TenKh", khachhang.TenKh.ToString());
                     HttpContext.Session.SetString("Email", khachhang.Email.Trim().ToLower());
                     _context.Add(khachhang);
@@ -156,8 +151,6 @@ namespace WebBanSua.Controllers
                     return RedirectToAction("Index");
             }
             return View();
-
-
         }
 
         public IActionResult Login()
@@ -171,11 +164,9 @@ namespace WebBanSua.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var khachhang = _context.KhachHangs.SingleOrDefault(x => x.Email.Trim().ToLower() == email.Trim().ToLower() && x.Password == password);
                 if (khachhang!=null)
                 {
-
                     HttpContext.Session.SetString("MaKh",khachhang.MaKh.ToString());
                     HttpContext.Session.SetString("TenKh", khachhang.TenKh.ToString());
                     HttpContext.Session.SetString("Email", khachhang.Email.Trim().ToLower());
@@ -192,7 +183,6 @@ namespace WebBanSua.Controllers
                             {
                                 return RedirectToAction("Index", "Home", new { area = "Admin" });
                             } else return RedirectToAction("Index");
-
                         }
                     }
                     return RedirectToAction("Index", "Home");
@@ -206,14 +196,12 @@ namespace WebBanSua.Controllers
             }
             return View();
         }
-
         //Logout
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();//remove session
             return RedirectToAction("Index");
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

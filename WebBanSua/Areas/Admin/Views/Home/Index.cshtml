@@ -1,24 +1,11 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     WebBanSua.Models.CuaHangBanSuaContext db = new WebBanSua.Models.CuaHangBanSuaContext();
     var khachHang = db.KhachHangs;
     var danhMuc = db.DanhMucSps;
     var sanPham = db.SanPhams;
-
-    var khoHang = db.DanhMucSps.Join(db.SanPhams,
-                                    dm => dm.MaDm,
-                                    sp => sp.MaDm,
-                                    (dm, sp) => new
-                                    {
-                                        tenDm = dm.TenDm,
-                                        anhDm = dm.AnhDm,
-                                        soLuong = sp.SoLuong
-                                    });
-
-
-    
+    var khoHang = db.DanhMucSps.Join(db.SanPhams,dm => dm.MaDm,sp => sp.MaDm,(dm, sp) => new{tenDm = dm.TenDm,anhDm = dm.AnhDm,soLuong = sp.SoLuong});
 }
 
  <div class="container-fluid py-4">

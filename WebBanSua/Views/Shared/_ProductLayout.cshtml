@@ -1,10 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WebBanSua.Extension
 @using WebBanSua.ModelViews
+
  @{
     List<WebBanSua.ModelViews.CartItem> lisSP = new List<WebBanSua.ModelViews.CartItem>();
     var gio = Context.Session.Get<List<CartItem>>("GioHang");
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
