@@ -25,9 +25,9 @@
                 </tr>
             </thead>
             <tbody>
-                    @foreach (var item in Model)
-                    {
-                         <tr>
+                @foreach (var item in Model)
+                {
+                 <tr>
                     <td>
                         <div class="product-item">
                             <a class="product-thumb" asp-action="Details" asp-controller="SanPham" asp- asp-route-id="@item.sanPham.MaSp"><img src="@item.sanPham.AnhSp" alt="Product"></a>
@@ -40,7 +40,7 @@
                     <td class="text-center">
                         <div class="count-input">
                            <label for="txtsoLuong">Số Lượng:</label>
-                           <input onclick="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong" name="txtsoLuong" max="100" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
+                           <input onclick="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong" name="txtsoLuong" min ="0" max="100" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
                         </div>
                     </td>
                     <td class="text-center text-lg text-medium">@item.TongTien.ToString("#,##0") VNĐ</td>

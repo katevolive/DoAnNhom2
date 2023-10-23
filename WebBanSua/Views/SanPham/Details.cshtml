@@ -59,7 +59,7 @@
                         <div class="gia-chitiet">@Model.GiaSp.ToString("#,##0") VNĐ</div>
                         <div class="card-size">
                            <label for="txtsoLuong">Số Lượng:</label>
-                           <input id="txtsoLuong" name="txtsoLuong" max="100" step="1" value="1" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
+                           <input id="txtsoLuong" name="txtsoLuong" min = "0" max="100" step="1" value="1" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
                         </div>
                         <div class="btn-them-gio">
                             <button class="ajax-them-gio" onclick="AddToCart(@Model.MaSp)">Thêm Vào Giỏ <i class='bx bxs-cart-add' ></i></button>
