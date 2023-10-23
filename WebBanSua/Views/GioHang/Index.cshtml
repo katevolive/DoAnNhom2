@@ -30,10 +30,10 @@
                          <tr>
                     <td>
                         <div class="product-item">
-                            <a class="product-thumb" asp-action="Details" asp-route-id="@item.sanPham.MaSp"><img src="@item.sanPham.AnhSp" alt="Product"></a>
+                            <a class="product-thumb" asp-action="Details" asp-controller="SanPham" asp- asp-route-id="@item.sanPham.MaSp"><img src="@item.sanPham.AnhSp" alt="Product"></a>
                             <div class="product-info">
                                  
-                                <h4 class="product-title"><a asp-action="Details" asp-route-id="@item.sanPham.MaSp">@item.sanPham.TenSp</a></h4><span><em>Size:</em> 108ml</span>
+                                <h4 class="product-title"><a asp-action="Details" asp-controller="SanPham" asp-route-id="@item.sanPham.MaSp">@item.sanPham.TenSp</a></h4><span><em>Size:</em> 108ml</span>
                             </div>
                         </div>
                     </td>
