@@ -24,7 +24,7 @@ namespace WebBanSua.Controllers
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(int? id)
+           public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -58,6 +58,11 @@ namespace WebBanSua.Controllers
         {
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Intro()
+        {
+            return View();
         }
 
 

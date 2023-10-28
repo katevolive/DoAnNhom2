@@ -148,7 +148,7 @@ namespace WebBanSua.Controllers
                     _context.Add(khachhang);
                     _context.Add(user);
                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login");
             }
             return View();
         }

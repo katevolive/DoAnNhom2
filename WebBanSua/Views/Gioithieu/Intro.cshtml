@@ -1,0 +1,159 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+
+@model WebBanSua.Models.KhachHang
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/logo.png">
+    <title>Web Bán Sữa Nhóm 2</title>
+    <link rel="stylesheet" href="/font/themify-icons-font/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="~/css/intro.css" />
+    <style>
+        .dangnhap-button a:hover {
+            color: rgb(198, 209, 37);
+        }
+
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+
+        .label-warning[href],
+        .badge-warning[href] {
+            background-color: #c67605;
+        }
+
+        #lblCartCount {
+            font-size: 12px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0 5px;
+            vertical-align: top;
+            margin-left: -10px;
+        }
+
+        .giohang-header .cart {
+            width: 40px;
+            position: absolute;
+            top: 25%;
+            right: 28%;
+        }
+
+        .giohang-header i {
+            color: rgb(7, 44, 112);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <!-- Bắt đầu thanh menu navigation -->
+        
+        <div class="heading">
+            <p class="heading_title">THÔNG TIN TƯ VẤN SỬ DỤNG SỮA</p>
+        </div>
+
+        <div class="warp_content">
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/MG_9636.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/11/IMG_4523.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/2-2.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+        </div>
+        <div class="warp_content">
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/MG_9636.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/11/IMG_4523.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/2-2.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+        </div>
+        <div class="warp_content">
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/MG_9636.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/11/IMG_4523.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+            <div class="wrap_item">
+                <img src="https://www.thmilk.vn/wp-content/uploads/2019/12/2-2.jpg" class="wrap_img alt="">
+                <h4 class="wrap_heading">Mì gà sốt kem nấm</h4>
+                <p class="wrap_time">Tháng Tám, 3, 2015</p>
+                <p class="wrap_text">
+                    Nếu như bạn yêu thích món ăn Ý, thay vì đi ra các nhà hàng đắt đỏ thì các bạn có
+                    thể làm ở nhà mà hương vị không hề thua kém nhé. Để làm được điều đó thì hãy theo dõi "cách làm mì Ý
+                    sốt kem gà” dưới đây.
+                </p>
+            </div>
+        </div>        
+    </div>
+    </body>
