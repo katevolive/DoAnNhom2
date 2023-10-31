@@ -65,7 +65,6 @@ namespace WebBanSua.Controllers
 
         }
 
-
         public async Task<IActionResult> UserDashboard(int id)
         {
             var maKH = HttpContext.Session.GetString("MaKh");
@@ -74,47 +73,35 @@ namespace WebBanSua.Controllers
             return View(customerUser);
         }
 
-
-
         [HttpPost]
         public  IActionResult UserDashboard(KhachHang customer, Account user)
         {
-            /*if (string.IsNullOrEmpty(customer.TenKh) == true)
-            {
-                ModelState.AddModelError("", "Tên không được để trống");
-                return View(customer);
-            }*/
             if (ModelState.IsValid)
             {
-                _context.Update(customer);
-                var check = _context.SaveChanges();
-                if (check > 0)
-                {
-                    return RedirectToAction("UserDashboard");
+                    _context.Update(customer);
+                    var check = _context.SaveChanges();
+                    if (check > 0)
+                    {
+                        return RedirectToAction("UserDashboard");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Lỗi lưu dữ liệu");
+                        return View(customer);
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Lỗi lưu dữ liệu");
-                    return View(customer);
-                }
-            }
             return View(customer);
-               
         }
-
- 
-
+       
         public IActionResult Privacy()
         {
             return View();
         }
 
-
         public IActionResult Register()
         {
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,12 +115,17 @@ namespace WebBanSua.Controllers
                     return View(khachhang);
                 }
                 var checkEmail = _context.KhachHangs.SingleOrDefault(x => x.Email.Trim().ToLower() == khachhang.Email.Trim().ToLower());
-                if (checkEmail != null)
+                if (checkEmail != null )
                 {
                     ModelState.AddModelError("", "Địa chỉ Email đã tồn tại");
                     return View(khachhang);
                 }
                 var checkPhone = _context.KhachHangs.SingleOrDefault(x => x.Phone == khachhang.Phone);
+                if (!IsPhoneNumberValid(checkPhone.Phone))
+                {
+                    ModelState.AddModelError("1", "Số điện thoại phải chứa đúng 9 số.");
+                    return View(khachhang);
+                }
                 if (checkPhone != null)
                 {
                     ModelState.AddModelError("", "Số điện thoại đã tồn tại");
@@ -152,7 +144,18 @@ namespace WebBanSua.Controllers
             }
             return View();
         }
-
+        private bool IsPhoneNumberValid(int phoneNumber)
+        {
+            int count = 0;
+            int tempNumber = phoneNumber;
+            while (tempNumber > 0)
+            {
+                tempNumber /= 10;
+                count++;
+            }
+            return count == 9;
+        }
+        
         public IActionResult Login()
         {
             return View();

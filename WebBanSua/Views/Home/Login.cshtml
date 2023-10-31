@@ -30,11 +30,13 @@
             <span class="text-danger">@Html.ValidationSummary()</span>
         </div>
         <label asp-for="Email" class="control-label login-label"></label>
-         <input asp-for="Email" class="form-control login-input" />
+        <label  class="control-label text-danger login-label">*</label>
+         <input asp-for="Email" class="form-control login-input" required />
          <span asp-validation-for="Email" class="text-danger"></span>
 
        <label asp-for="Password" class="control-label login-label"></label>
-         <input asp-for="Password" type="password" class="form-control login-input" />
+       <label class="control-label text-danger login-label">*</label>
+         <input asp-for="Password" type="password" class="form-control login-input" required />
          <span asp-validation-for="Password" class="text-danger"></span>
         <button type="submit"class="login-btn btn btn-primary">Login</button>
         <p class="register-question">

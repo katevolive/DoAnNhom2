@@ -50,47 +50,6 @@
         <div class="col-md-7 col-xl-8">
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="account" role="tabpanel">
-
-                    <div class="card-profile">
-                        <div class="card-profile-header">
-                            <div class="card-actions float-right">
-                                <div class="dropdown show">
-                                    <a href="#" data-toggle="dropdown" data-display="static">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
-                                            
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            <h5 class="card-title mb-0">Thông Tin Công Khai</h5>
-                        </div>
-                        <div class="card-body">
-                         
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label asp-for="TenKh" >Tên Của Bạn</label>
-                                            <input asp-for="TenKh" type="text" class="form-control" id="inputUsername" placeholder="Username">
-                                             <span asp-validation-for="TenKh" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputUsername">Tiểu Sử</label>
-                                            <textarea rows="2" class="form-control" id="inputBio" placeholder="Về bản thân của bạn"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="text-center">
-                                            <img alt="Andrew Jones" src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle img-responsive mt-2" width="128" height="128">
-                                            <div class="mt-2">
-                                                <span class="btn btn-primary"><i class="fa fa-upload"></i></span>
-                                            </div>
-                                            <small>Để có hình ảnh đẹp nhất, hãy sử dụng hình ảnh có kích thước tối thiểu 128px x 128px ở định dạng .jpg hoặc.png</small>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
                     <div class="card-profile">
                         <div class="card-profile-header">
                             <div class="card-actions float-right">
@@ -106,39 +65,56 @@
                             <h5 class="card-title mb-0">Thông Tin Riêng Tư</h5>
                         </div>
                         <div class="card-body">
-                           
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <div class="form-group">
+                                        <label asp-for="TenKh" >Tên Của Bạn</label>
+                                        <input asp-for="TenKh" type="text" class="form-control" id="inputUsername" placeholder="Username">
+                                        <span asp-validation-for="TenKh" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
                                         <label asp-for="Phone">Số điện thoại</label>
-                                        <input asp-for="Phone" type="text" class="form-control" id="inputFirstName" placeholder="Phone">
-                                         <span asp-validation-for="Phone" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                         <div class="form-group">
-                                         @Html.DropDownListFor(m => m.GioiTinh, 
-                                         new SelectList(Enum.GetValues(typeof(Gender))), 
-                                         "Chọn Giới Tính:")
-                                           </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                         <label asp-for="Ngaysinh" class="control-label">Ngày Sinh</label>
-                                         <input asp-for="Ngaysinh" type="date" class="form-control" />
-                                         <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+                                        <input id="phone" asp-for="Phone" type="text" class="form-control"  placeholder="Nhập số điện thoại" >
+                                        <span id="phoneError" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="Email">Email</label>
-                                    <input asp-for="Email" type="email" class="form-control" id="inputEmail4" readonly placeholder="Email">
-                                     <span asp-validation-for="Email" class="text-danger"></span>
+                                <div class="form-group col-md-4">
+                                    <div class="text-center">   
+                                            <img  id="userImage" src="~/img/product/@(Model.AvatarKh ?? "https://bootdey.com/img/Content/avatar/avatar1.png")" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                                            @*<img  id="userImage" src="~/img/product/tree.png ?? "https://bootdey.com/img/Content/avatar/avatar1.png"" class="rounded-circle img-responsive mt-2" width="128" height="128">*@
+                                            <div class="mt-2">
+                                                    <label for="imageUpload" class="btn btn-primary">
+                                                        <i class="fa fa-upload"></i> Tải ảnh lên
+                                                    </label>
+                                                <input asp-for="AvatarKh" id="imageUpload"  type="file"  style="display: none;" accept=".jpg, .jpeg, .png" />
+                                            </div>
+                                            <small>Để có hình ảnh đẹp nhất, hãy sử dụng hình ảnh có kích thước tối thiểu 128px x 128px ở định dạng .jpg hoặc.png</small>
+                                        </div>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="Diachi">Địa Chỉ</label>
-                                    <input asp-for="Diachi" type="text" class="form-control" id="inputAddress" placeholder="Address">
-                                     <span asp-validation-for="Diachi" class="text-danger"></span>
+                                <div class="form-group col-md-6">
+                                        <label asp-for="Ngaysinh" class="control-label">Ngày Sinh</label>
+                                        <input asp-for="Ngaysinh" type="date" class="form-control" />
+                                        <span asp-validation-for="Ngaysinh" class="text-danger"></span>
                                 </div>
-                                 <button type="submit" value="Save" class="btn btn-primary">Lưu Thay Đổi</button>
-                        
-
+                                <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                        @Html.DropDownListFor(m => m.GioiTinh, 
+                                        new SelectList(Enum.GetValues(typeof(Gender))), 
+                                        "Chọn Giới Tính:")
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email">Email</label>
+                                <input asp-for="Email" type="email" class="form-control" id="inputEmail4" readonly placeholder="Email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Diachi">Địa Chỉ</label>
+                                <input asp-for="Diachi" type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                    <span asp-validation-for="Diachi" class="text-danger"></span>
+                            </div>
+                                <button id="saveBtn" type="submit" value="Save" disabled="disabled" class="btn btn-primary">Lưu Thay Đổi</buttonid>
                         </div>
                     </div>
                 </div> 
@@ -186,27 +162,48 @@ body{
  #GioiTinh{
             border: 1px solid #d2d6da;
             border-radius:14px;
-            margin-top: 30px;
+            margin-top: 32px;
             background-color: #fff;
-            padding: 6px;
+            padding: 10px;
+            margin-left: 30px;
         }
 </style>
 
 <script type="text/javascript">
-    
-        var password = document.getElementById("inputPasswordNew")
-  , confirm_password = document.getElementById("inputPasswordNew2");
-
-function validatePassword(){
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Mật khẩu không trùng khớp !");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
-
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
+        const input = document.getElementById('imageUpload');
+        const img = document.getElementById('userImage');
+        const phone = document.getElementById('phone');
+        const saveBtn = document.getElementById('saveBtn');
+  
+        input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e => {
+                img.src = e.target.result;
+            });
+            reader.readAsDataURL(file);
+            }
+         });
+     function uploadImage(e){
+       //img.src = URL.createObjectURL(e.target.files[0]);
+       //  console.log(e.target.files[0]); 
+       //      const base64Image =  img.src;
+       //      document.getElementById('Avatarkh').value = base64Image;
+       //img.onload = () => {
+       //     URL.revokeObjectURL(img.src);
+       //}
+     }    
+        phone.addEventListener('keyup', function () {
+        var phoneNumber = this.value;
+        if (/^\d{9}$/.test(phoneNumber)) {
+            document.getElementById('phoneError').textContent = '';
+            saveBtn.removeAttribute('disabled');
+        } else {
+            document.getElementById('phoneError').textContent = 'Số điện thoại không hợp lệ.\n Vui lòng nhập lại';
+             saveBtn.setAttribute('disabled', 'disabled'); // 
+        }
+    });
     </script>
 </body>
 
