@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanSua.Models;
 
@@ -22,6 +19,21 @@ namespace WebBanSua.Controllers
         {
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
+        }
+        [Route("SanPham/Search")]
+        public async Task<IActionResult> Search(string searchInput)
+        {
+            if (string.IsNullOrWhiteSpace(searchInput))
+            {
+                 var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
+                 return View(await cuaHangBanSuaContext.ToListAsync());
+            }
+            var searchSanPham = await _context.SanPhams
+                .Where(result => result.TenSp.Contains(searchInput))
+                .Include(s => s.MaDmNavigation)
+                .ToListAsync();
+            return PartialView("_SearchResults", searchSanPham);
+            
         }
 
         public async Task<IActionResult> Details(int? id)

@@ -95,8 +95,8 @@
                 </li>
             </ul>
             <div class="search-box">
-                <input type="text" class="search-txt" placeholder="Tìm kiếm">
-                <a href="" class="search-btn">
+                <input id="searchInput" type="text" class="search-txt" placeholder="Tìm kiếm">
+                <a asp-action="Search" asp-controller="SanPham" class="search-btn">
                     <i class='bx bx-search'></i>
                 </a>
             </div>
@@ -176,6 +176,29 @@
       <script type="text/javascript" src="~/js/slider-product.js"></script>
        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        <script type="text/javascript">
+
+           $(document).ready(function () {
+            $("#searchButton").click(function () {
+                doSearch();
+            });
+
+        function doSearch() {
+            var searchInput = $("#searchInput").val();
+            $.ajax({
+                url: "/SanPham/Search", // Địa chỉ của action Search
+                type: "GET",
+                data: { searchInput: searchInput }, // Truyền tham số tìm kiếm
+                success: function (data) {
+                    // Cập nhật phần tử "searchResults" với kết quả tìm kiếm.
+                    $("#searchResults").html(data);
+                },
+                error: function (error) {
+                    alert('Lỗi trong quá trình tìm kiếm.');
+                }
+            });
+        }
+});
+
            function AddToCartList(Id){
                $.ajax({
                    url: '/giohang/add-cart',

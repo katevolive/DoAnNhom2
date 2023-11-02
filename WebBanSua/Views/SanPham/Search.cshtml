@@ -3,7 +3,7 @@
 @model IEnumerable<WebBanSua.Models.SanPham> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
       var spBest =Model.Where(p => p.BestSeller == true);
       var spActive =Model.Where(p => p.TrangThai == true);
@@ -24,6 +24,7 @@
                 <div class="container">
                     <span class="item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></span>
                       <span class="item"> > Sản phẩm</span>
+                        <span class="item"> > Search</span>
                 </div>
               </section>
         </div>
@@ -105,43 +106,7 @@
                     </ul>
                 </div>
             </div>
-        </section>
-
-        <div class="row product-list">
-            @foreach (var item in spActive){
-                <div class="col-md-4" style="margin-top:30px;">
-                <div class="card">
-                <div class="card-img-product">
-                    <img src="@item.AnhSp" alt="">
-                </div>
-                <div class="card-title">
-                    @item.TenSp
-                </div>
-                <div class="card-price">
-                    @item.GiaSp.ToString("#,##0") VNĐ
-                </div>
-                <div class="card-diseption">
-                    <div class="card-size">
-                        <h3>Size:</h3>
-                        <span>250ml</span>
-                        <span>350ml</span>
-                        <span>500ml</span>
-                    </div>
-                    <div class="card-action">
-                       @if (Context.Session.GetString("MaKh") != null)
-                                    {
-                        <button> <a asp-action="Details" asp-route-id="@item.MaSp" style="text-decoration:none; color:white">Mua Ngay</a></button>
-                                        <button onclick="AddToCartList(@item.MaSp)" id="themvaogio">Thêm<i class='bx bxs-cart-add' ></i></button>
-                                    }
-                                    else
-                                    {
-                                        <button> <a asp-action="Login" asp-controller="Home" style="text-decoration:none; color:white">Mua Ngay</a></button>
-                                    }
-                    </div>
-                </div>
-                </div>
-            </div>
-           }          
+        </section>      
         </div>
         <div id="searchResults" class="row product-list">
     <!-- Kết quả tìm kiếm sẽ được hiển thị ở đây. -->
@@ -179,26 +144,23 @@
                 }
           </div>
     </div>
-</div>
 
 <script type="text/javascript">
     //var typingTimer;
     //var doneTypingInterval = 500;
 
     //function doneTyping() {
-    //    var searchInput = document.getElementById("searchInput").value;
+    //    var searchInput = $("#searchInput").val();
     //    console.log(searchInput);
-    //    // Thực hiện AJAX request để tìm kiếm dựa trên `searchInput` và cập nhật phần tử "searchResults".
     //    $.ajax({
-    //        url: "/SanPham/Search", // Địa chỉ của action Search
+    //        url: "/SanPham/Search", 
     //        type: "GET",
-    //        data: { input: searchInput }, // Truyền tham số tìm kiếm
+    //        data: { input: searchInput }, 
     //        success: function (data) {
-    //            // Cập nhật phần tử "searchResults" với kết quả tìm kiếm.
     //            $("#searchResults").html(data);
     //        },
     //        error: function (error) {
-    //            alert('loi~ :',error);
+    //            alert('------ :',error);
     //            console.log(error);
     //        }
     //    });

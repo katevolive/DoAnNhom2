@@ -114,7 +114,7 @@
                                 <input asp-for="Diachi" type="text" class="form-control" id="inputAddress" placeholder="Address">
                                     <span asp-validation-for="Diachi" class="text-danger"></span>
                             </div>
-                                <button id="saveBtn" type="submit" value="Save" disabled="disabled" class="btn btn-primary">Lưu Thay Đổi</buttonid>
+                                <button id="saveBtn" type="submit" value="Save"  class="btn btn-primary">Lưu Thay Đổi</button>
                         </div>
                     </div>
                 </div> 
@@ -193,8 +193,10 @@ body{
        //img.onload = () => {
        //     URL.revokeObjectURL(img.src);
        //}
-     }    
-        phone.addEventListener('keyup', function () {
+     }   
+     
+     document.addEventListener('DOMContentLoaded', function () {
+        phone.addEventListener('input', function () {
         var phoneNumber = this.value;
         if (/^\d{9}$/.test(phoneNumber)) {
             document.getElementById('phoneError').textContent = '';
@@ -204,6 +206,7 @@ body{
              saveBtn.setAttribute('disabled', 'disabled'); // 
         }
     });
+     });
     </script>
 </body>
 

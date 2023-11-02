@@ -111,13 +111,18 @@ namespace WebBanSua.Controllers
             {
                 if (string.IsNullOrEmpty(khachhang.TenKh) == true || string.IsNullOrEmpty(khachhang.GioiTinh) == true|| string.IsNullOrEmpty(khachhang.Email) == true || khachhang.Phone == null || khachhang.Ngaysinh == null)
                 {
-                    ModelState.AddModelError("", "Thông tin không được để trống");
+                    ModelState.AddModelError("TenKh", "Thông tin không được để trống");
+                    return View(khachhang);
+                }
+                if (string.IsNullOrEmpty(khachhang.TenKh) == true || (khachhang.Ngaysinh) == null)
+                {
+                    ModelState.AddModelError("Ngaysinh", "Thông tin không được để trống");
                     return View(khachhang);
                 }
                 var checkEmail = _context.KhachHangs.SingleOrDefault(x => x.Email.Trim().ToLower() == khachhang.Email.Trim().ToLower());
                 if (checkEmail != null )
                 {
-                    ModelState.AddModelError("", "Địa chỉ Email đã tồn tại");
+                    ModelState.AddModelError("Email", "Địa chỉ Email đã tồn tại");
                     return View(khachhang);
                 }
                 var checkPhone = _context.KhachHangs.SingleOrDefault(x => x.Phone == khachhang.Phone);
@@ -128,7 +133,7 @@ namespace WebBanSua.Controllers
                 }
                 if (checkPhone != null)
                 {
-                    ModelState.AddModelError("", "Số điện thoại đã tồn tại");
+                    ModelState.AddModelError("Phone", "Số điện thoại đã tồn tại");
                     return View(khachhang);
                 }
                     user.TaiKhoan = khachhang.Email;

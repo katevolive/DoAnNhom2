@@ -15,15 +15,7 @@
     <link rel="stylesheet" href="~/css/register.css">
     <link rel="stylesheet" href="~/lib/bootstrap-5.1.3-dist/css/bootstrap.css">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <style>
-        #GioiTinh{
-             border: 1px solid #d2d6da;
-            border-radius:14px;
-            margin-top: 30px;
-            background-color: #fff;
-            padding: 6px;
-        }
-    </style>
+    
 </head>
 <body>
      <form asp-action="Register">
@@ -38,16 +30,16 @@
             </button>
         </div>
         <div class="register-or"><span>Or</span></div>
-
+        <div class="div-error"><span asp-validation-for="TenKh" class="text-danger" ></span></div>
         <div class="container">
             <label asp-for="TenKh" class="register-labelname">Tên</label>
             <input asp-for="TenKh" type="text" class="register-ipname" placeholder="Full name">
-            <span asp-validation-for="TenKh" class="text-danger"></span>
+            <span class="text-danger"></span>
         
-        <div class="row register-container">
+        <div class="row register-container margin-top">
             <div class="col-sm-6">
                 <label asp-for="Ngaysinh" class="register-label">Ngày Sinh</label>
-                <input asp-for="Ngaysinh" type="date" class="register-input" placeholder="dd/mm/yyyy"/>
+                <input id ="ngaysinh"asp-for="Ngaysinh" type="date" class="register-input" placeholder="dd/mm/yyyy"/>
                 <span asp-validation-for="Ngaysinh" class="text-danger"></span>
             </div>
             <div class="col-sm-6">
@@ -57,11 +49,11 @@
             </div>
         </div>
         
-        <div class="row register-container">
+        <div class="row register-container margin-top">
             <div class="col-sm-6">
                 <label asp-for="Phone" class="register-label">Điện thoại</label>
-        <input asp-for="Phone" type="text" class="register-input" placeholder="Phone">
-         <span asp-validation-for="Phone" class="text-danger"></span>
+        <input id="phone" asp-for="Phone" type="text" class="register-input" placeholder="Phone">
+         <span id="phoneError" asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="col-sm-6">
                 <label asp-for="Email" class="register-label">Email</label>
@@ -71,7 +63,7 @@
         </div>
         
         
-        <div class="row register-container">
+        <div class="row register-container margin-top">
             <div class="col-sm-6">
                 <label asp-for="Password" class="register-label">Mật khẩu</label>
         <input asp-for="Password" type="password" id="password" class="register-input" placeholder="Password">
@@ -82,7 +74,7 @@
                 <input type="password" id="confirm_password" class="register-input" placeholder="Nhập lại mật khẩu">
             </div>
         </div>
-        <button type="submit" value="Register" class="register-btn btn btn-primary">Đăng ký</button>
+        <button id="saveButton" type="submit" value="Register"  class="register-btn btn btn-primary">Đăng ký</button>
         <p class="login-question">
             <a asp-action="Login" asp-controller="Home" class="login-text">Quay lại đăng nhập</a>
         </p>
@@ -90,22 +82,74 @@
        
     </div>
     </div>
-    <script language="javascript">
-        var password = document.getElementById("password")
-  , confirm_password = document.getElementById("confirm_password");
-
-function validatePassword(){
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Mật khẩu không trùng khớp !");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
-
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-    </script>
     </form>
-</body>
+    <style>
+        #GioiTinh{
+             border: 1px solid #d2d6da;
+            border-radius:14px;
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 6px;
+        }
+        .margin-top{
+            margin-top: 20px;
+        }
+        .div-error{
+            text-align:center;
+            margin-bottom:10px;
+            font-size:20px;
+        }
+    </style>
+    <script type="text/javascript">
+        const password = document.getElementById('password');
+        const confirm_password = document.getElementById('confirm_password');
+        const phone = document.getElementById('phone');
+        const saveButton = document.getElementById('saveButton');
+        const ngaysinh = document.getElementById('ngaysinh');
+
+        function validatePassword(){
+           if (password.value == '' ) {
+                password.setCustomValidity("Không Được để trống!");
+                saveButton.disabled = false;
+            } else {
+                password.setCustomValidity('');
+                saveButton.disabled = false;
+            }
+            if (password.value != confirm_password.value) {
+                console.log("vao pass");
+                confirm_password.setCustomValidity("Mật khẩu không trùng khớp!");
+                saveButton.disabled = false;
+            } else {
+                confirm_password.setCustomValidity('');
+                if (password.value != '') {
+                    saveButton.disabled = false;
+                }
+            }
+        }
+        
+            password.oninput = validatePassword; 
+            confirm_password.oninput = validatePassword; 
+
+         ngaysinh.addEventListener('input',function(){
+             if (ngaysinh.value == null ) {
+                password.setCustomValidity("Không Được để trống!");
+            } else {
+                password.setCustomValidity('');
+            }
+         });
+         phone.addEventListener('keyup', function () 
+         {
+            var phoneNumber = this.value;
+            if (/^\d{9}$/.test(phoneNumber)) {
+                document.getElementById('phoneError').textContent = '';
+                saveButton.removeAttribute('disabled');
+            } else {
+                document.getElementById('phoneError').textContent = 'Số điện thoại không hợp lệ !!';
+                 saveButton.setAttribute('disabled', 'disabled'); 
+            }
+         });
+
+      </script>
+    </body>
 </html>
 
