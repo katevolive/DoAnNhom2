@@ -51,6 +51,9 @@
         top: 25%;
         right: 28%;
     }
+    .margin-right-70{
+        /*margin-right:70px;*/
+    }
 
 .giohang-header i{
     color: rgb(7, 44, 112);
@@ -60,8 +63,8 @@
 <body>
     <div class="main">
         <!-- Bắt đầu thanh menu navigation -->
-        <div class="header" style="z-index: 10 !important;">
-            <ul class="header-nav mb-0">
+        <div class="header" style=" z-index: 10 !important;">
+            <ul class="header-nav mb-0 margin-right-70">
                 <a asp-action="Index" asp-controller="Home"><img class="logo-header" src="~/img/logo.png" alt=""></a>
                 <li><a  asp-controller="Home">GIỚI THIỆU</a>
                     <ul class="header-subnav">
@@ -88,7 +91,7 @@
              @* <a asp-action="Index" asp-controller="GioHang"><img class="cart" src="~/img/cart.png" alt=""></a>*@
             @if (Context.Session.GetString("MaKh") != null)
             {
-            <div class="giohang-header" id="CartCount">
+            <div class="giohang-header margin-right-70" id="CartCount">
                 <a asp-action="Index" asp-controller="GioHang"><img class="cart" src="~/img/cart.png" alt=""></a>
             </div>
                  <div class="dangnhap-button">
@@ -160,7 +163,7 @@
         </div>
             </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script type="text/javascript" src="~/js/slides.js"></script>
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">

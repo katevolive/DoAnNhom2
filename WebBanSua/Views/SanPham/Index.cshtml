@@ -3,7 +3,7 @@
 @model IEnumerable<WebBanSua.Models.SanPham> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Web Bán Sữa";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
       var spBest =Model.Where(p => p.BestSeller == true);
       var spActive =Model.Where(p => p.TrangThai == true);
@@ -182,33 +182,25 @@
 </div>
 
 <script type="text/javascript">
-    //var typingTimer;
-    //var doneTypingInterval = 500;
-
-    //function doneTyping() {
-    //    var searchInput = document.getElementById("searchInput").value;
-    //    console.log(searchInput);
-    //    // Thực hiện AJAX request để tìm kiếm dựa trên `searchInput` và cập nhật phần tử "searchResults".
-    //    $.ajax({
-    //        url: "/SanPham/Search", // Địa chỉ của action Search
-    //        type: "GET",
-    //        data: { input: searchInput }, // Truyền tham số tìm kiếm
-    //        success: function (data) {
-    //            // Cập nhật phần tử "searchResults" với kết quả tìm kiếm.
-    //            $("#searchResults").html(data);
-    //        },
-    //        error: function (error) {
-    //            alert('loi~ :',error);
-    //            console.log(error);
-    //        }
-    //    });
-    //}
-
-    //$("#searchInput").on('input', function () {
-    //    clearTimeout(typingTimer);
-    //    typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    //});
-
-    
+     //function dosearch(search) {
+     //       $.ajax({
+     //           url: "/Sanpham/Search", 
+     //           type: "GET",
+     //           data: { searchInput: search }, 
+     //           success: function (data) {
+     //               $("#searchresults").html(data);
+     //           },
+     //           error: function(){
+     //               alert('loi~');
+     //               }
+     //       });
+     //   }
+         //$(document).ready(function () {
+         //   $("#searchButton").click(function () {
+         //   var search = $("#Search").val();
+         //       console.log(search);
+         //       doSearch(search);
+         //   });
+         //});
 </script>
 </body>

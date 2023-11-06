@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebBanSua.Models;
@@ -20,20 +22,18 @@ namespace WebBanSua.Controllers
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
-        [Route("SanPham/Search")]
+        [Route("/SanPham/Search")]
         public async Task<IActionResult> Search(string searchInput)
         {
-            if (string.IsNullOrWhiteSpace(searchInput))
+            if (!string.IsNullOrWhiteSpace(searchInput))
             {
-                 var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
-                 return View(await cuaHangBanSuaContext.ToListAsync());
+                ViewBag.SearchInput = searchInput;
+                var searchSanPham = _context.SanPhams
+                            .Where(result => result.TenSp.Contains(searchInput))
+                            .Include(s => s.MaDmNavigation);
+                return View(await searchSanPham.ToListAsync());
             }
-            var searchSanPham = await _context.SanPhams
-                .Where(result => result.TenSp.Contains(searchInput))
-                .Include(s => s.MaDmNavigation)
-                .ToListAsync();
-            return PartialView("_SearchResults", searchSanPham);
-            
+            return View();
         }
 
         public async Task<IActionResult> Details(int? id)

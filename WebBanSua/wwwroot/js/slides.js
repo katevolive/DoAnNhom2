@@ -1,6 +1,6 @@
-﻿var kichThuoc = document.getElementsByClassName("slide")[0].clientWidth;
+﻿var kichThuoc = document.getElementsByClassName("slide")[0];
 var chuyenSlide = document.getElementsByClassName("chuyen-slide")[0];
-var Img = chuyenSlide.getElementsByTagName("img")
+var Img = chuyenSlide.getElementsByTagName("img");
 var maxNext = kichThuoc * Img.length;
 maxNext -= kichThuoc;
 var next = 0;

@@ -25,10 +25,12 @@ body {
     right: 0;
 }
 
+
     .header .header-nav {
         display: inline-block;
         list-style: none;
         line-height: 100px;
+        margin-right: 70px;
     }
 
 .header-nav li:hover .header-subnav {
