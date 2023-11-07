@@ -19,21 +19,42 @@ namespace WebBanSua.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.IsTinTucPage = "SanPham"; ;
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
         [Route("/SanPham/Search")]
         public async Task<IActionResult> Search(string searchInput)
         {
+            var searchSP = from l in _context.SanPhams.Include(s => s.MaDmNavigation)
+                           select l;
             if (!string.IsNullOrWhiteSpace(searchInput))
             {
                 ViewBag.SearchInput = searchInput;
-                var searchSanPham = _context.SanPhams
-                            .Where(result => result.TenSp.Contains(searchInput))
-                            .Include(s => s.MaDmNavigation);
-                return View(await searchSanPham.ToListAsync());
+                searchSP = searchSP.Where(s => s.TenSp.Contains(searchInput));
             }
-            return View();
+            return View(await searchSP.ToListAsync());
+        }
+            //if (!string.IsNullOrWhiteSpace(searchInput))
+            //{
+            //    ViewBag.SearchInput = searchInput;
+            //    var searchSanPham = _context.SanPhams
+            //                .Where(result => result.TenSp.Contains(searchInput))
+            //                .Include(s => s.MaDmNavigation);
+            //    return View(await searchSanPham.ToListAsync());
+            //}
+            //return View();
+        public async Task<IActionResult> Search2(string id)
+        {
+            var searchSanPham = _context.SanPhams.Include(s => s.MaDmNavigation);
+            var searchSP = from l in _context.SanPhams.Include(s => s.MaDmNavigation)
+                           select l;
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                ViewBag.SearchInput = id;
+                searchSP = searchSP.Where(s => s.TenSp.Contains(id));
+            }
+                return View(await searchSP.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)

@@ -4,6 +4,7 @@
  @{
     List<WebBanSua.ModelViews.CartItem> lisSP = new List<WebBanSua.ModelViews.CartItem>();
     var gio = Context.Session.Get<List<CartItem>>("GioHang");
+    var searchAction = ViewBag.IsTinTucPage as string;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -98,13 +99,14 @@
                     </ul>
                 </li>
             </ul>
-            <div class="search-box">
-                <input id="Search" type="text" class="search" placeholder="Tìm kiếm">
-                @*<a id="searchButton" asp-action="Search" asp-controller="SanPham" class="search-btn">*@
-                <a id="searchButton" class="search-btn">
-                    <i class='bx bx-search'></i>
-                </a>
-            </div>
+
+             @using (Html.BeginForm("Search",searchAction, FormMethod.Get, new { @class = "form-inline" }))
+                    {
+                        <div style="display: flex;" class="form-group" >
+                            <input style="border-radius:22px;" type="Text" class="form-control mx-sm-2 " value="@ViewBag.SearchInput" name="searchInput" placeholder="Nhập tên cần tìm">
+                            <input style="border-radius:22px; padding:10px" type="submit" class="btn btn-success" value="Tìm Kiếm ">
+                        </div>
+                    }
            @if (Context.Session.GetString("MaKh") != null)
             {
             <div class="giohang-header" id="CartCount">
@@ -180,34 +182,34 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script type="text/javascript" src="~/js/slider-product.js"></script>
        <script type="text/javascript">
-        function dosearch(search) {
-            $.ajax({
-                url: "/SanPham/Search", 
-                type: "GET",
-                data: { searchInput: search }, 
-                success: function (data) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: ':D',
-                        showConfirmButton: false,
-                        timer: 500
-                        });
-                        //window.location.href = "/SanPham/Search"; 
-                },
-                error: function(xhr, status, error) {
-                    console.log("Lỗi: " + error);
-                    alert("Có lỗi xảy ra: " + error);
-                }
-            });
-        }
-         $(document).ready(function () {
-            $("#searchButton").click(function () {
-            var search = $("#Search").val();
-                console.log(search);
-                dosearch(search);
-                }); 
-            });
+        //function dosearch(search) {
+        //    $.ajax({
+        //        url: "/SanPham/Search", 
+        //        type: "GET",
+        //        data: { searchInput: search }, 
+        //        success: function (data) {
+        //            //Swal.fire({
+        //            //    position: 'center',
+        //            //    icon: 'success',
+        //            //    title: ':D',
+        //            //    showConfirmButton: false,
+        //            //    timer: 500
+        //            //    });
+        //            window.location.href = "/SanPham/Search"; 
+        //        },
+        //        error: function(xhr, status, error) {
+        //            console.log("Lỗi: " + error);
+        //            alert("Có lỗi xảy ra: " + error);
+        //        }
+        //    });
+        //}
+        // $(document).ready(function () {
+        //    $("#searchButton").click(function () {
+        //    var search = $("#Search").val();
+        //        console.log(search);
+        //        dosearch(search);
+        //        }); 
+        //    });
 
            function AddToCartList(Id){
                $.ajax({

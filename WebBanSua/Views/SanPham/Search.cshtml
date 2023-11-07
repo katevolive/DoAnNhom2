@@ -113,8 +113,6 @@
 
 			<div class="row product-list">
 				@foreach (var item in Model)
-					if (item.TenSp == searchInput)
-					{
 						{
 						<div class="col-md-4" style="margin-top:30px;">
 							<div class="card">
@@ -149,7 +147,6 @@
 							</div>
 						</div>
 						}
-					}
 			</div>
 		</div>
 	</div>
@@ -158,26 +155,6 @@
 
 
 	<script type="text/javascript">
-    @* function dosearch(search) {
-            $.ajax({
-                url: "/sanpham/search", 
-                type: "get",
-                data: { searchinput: search }, 
-                success: function (data) {
-                    $("#searchresults").html(data);
-                },
-                error: function(){
-                    alert('loi~');
-                    }
-            });
-        }*@
-         //$(document).ready(function () {
-         //   $("#searchButton").click(function () {
-         //   var search = $("#Search").val();
-         //       console.log(search);
-         //       doSearch(search);
-         //   });
-         //});
 </script>
 </body>
 
