@@ -41,7 +41,16 @@
   -moz-border-radius: 9px;
   border-radius: 9px;
 }
-
+.btn-success2 {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.btn-success2:hover {
+    color: #fff;
+    background-color: #42d927;
+    border-color: #146c43;
+}
 .label-warning[href],
 .badge-warning[href] {
   background-color: #c67605;
@@ -104,7 +113,7 @@
                     {
                         <div style="display: flex;" class="form-group" >
                             <input style="border-radius:22px;" type="Text" class="form-control mx-sm-2 " value="@ViewBag.SearchInput" name="searchInput" placeholder="Nhập tên cần tìm">
-                            <input style="border-radius:22px; padding:10px" type="submit" class="btn btn-success" value="Tìm Kiếm ">
+                            <input style="border-radius:22px;" type="submit" class="btn btn-success2" value="Tìm Kiếm ">
                         </div>
                     }
            @if (Context.Session.GetString("MaKh") != null)

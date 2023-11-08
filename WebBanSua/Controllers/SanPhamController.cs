@@ -19,7 +19,7 @@ namespace WebBanSua.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.IsTinTucPage = "SanPham"; ;
+            ViewBag.IsTinTucPage = "SanPham"; 
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
