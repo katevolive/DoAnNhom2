@@ -134,10 +134,9 @@
     color: rgb(20, 23, 207);
     font-size: 50px;
     top: 48%;
-    padding-left: 20px;
 }
 
     .dieu-huong-detail i:last-child {
         position: relative;
-        left: 340px;
+        left: 380px;
     }
