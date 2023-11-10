@@ -134,7 +134,25 @@ body {
     .product_meta a, .pro-price {
         color: #fc5959;
     }
+.pro_none {
+    margin-top: 10px !important;
+    padding: 20px;
+    font-family: "DINRoundOT", sans-serif;
+    color: inherit;
+    font-weight: bold;
+    font-size: 40px;
+    text-transform: capitalize;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin-left:20px;
+}
 
+}
 .pro-price, .amount-old {
     font-size: 18px;
     padding: 0 10px;

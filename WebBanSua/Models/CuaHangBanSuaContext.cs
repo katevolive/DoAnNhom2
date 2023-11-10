@@ -30,7 +30,7 @@ namespace WebBanSua.Models
             if (!optionsBuilder.IsConfigured)
             {
 
-                optionsBuilder.UseSqlServer("Server=DESKTOP-46FRM1S\\SQLEXPRESS;Database=CuaHangBanSua;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-OPCBDIF\\SQLEXPRESS;Database=CuaHangBanSua;Integrated Security=true;");
             }
         }
 

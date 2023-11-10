@@ -87,7 +87,7 @@
         <div class="header" id="header-cart" style="z-index: 10 !important;">
             <ul class="header-nav mb-0 margin-right-80 ">
                 <a asp-action="Index" asp-controller="Home"><img class="logo-header" src="~/img/logo.png" alt=""></a>
-                <li><a href="">GIỚI THIỆU</a>
+                <li><a asp-action="Intro" asp-controller="Gioithieu">GIỚI THIỆU</a>
                     <ul class="header-subnav">
                         <li><a href="">LỊCH SỬ</a></li>
                         <li><a href="">CHÍNH SÁCH & QUY ĐỊNH</a></li>
@@ -192,35 +192,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script type="text/javascript" src="~/js/slider-product.js"></script>
        <script type="text/javascript">
-        //function dosearch(search) {
-        //    $.ajax({
-        //        url: "/SanPham/Search", 
-        //        type: "GET",
-        //        data: { searchInput: search }, 
-        //        success: function (data) {
-        //            //Swal.fire({
-        //            //    position: 'center',
-        //            //    icon: 'success',
-        //            //    title: ':D',
-        //            //    showConfirmButton: false,
-        //            //    timer: 500
-        //            //    });
-        //            window.location.href = "/SanPham/Search"; 
-        //        },
-        //        error: function(xhr, status, error) {
-        //            console.log("Lỗi: " + error);
-        //            alert("Có lỗi xảy ra: " + error);
-        //        }
-        //    });
-        //}
-        // $(document).ready(function () {
-        //    $("#searchButton").click(function () {
-        //    var search = $("#Search").val();
-        //        console.log(search);
-        //        dosearch(search);
-        //        }); 
-        //    });
-
            function AddToCartList(Id){
                $.ajax({
                    url: '/giohang/add-cart',

@@ -23,12 +23,26 @@
 		margin: 60px 0;
 		border-radius: 20px
 	}
-
 	.buy:hover {
 		cursor: pointer;
 	}
+	.zoom-container {
+    overflow: hidden;
+    position: relative;
+    width: 500px; 
+    height: 500px;
+	}
+	.zoomImg {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		transition: transform 0.3s ease;
+	}
+	.zoom-container:hover .zoomImg {
+		opacity: 1;
+		transform: scale(1.3); 
+	}
 </style>
-
 <div class="location-page">
 	<section class="c-breadcrumbs">
 		<div class="container">
@@ -44,15 +58,12 @@
 			<div class="col-md-6">
 				<div class="slide-detail-product">
 					<div class="dieu-huong-detail">
-						<i class='bx bxs-chevron-left' onclick="prevSlide();"></i>
-						<i class='bx bxs-chevron-right' onclick="nextSlide();"></i>
+						@*<i class='bx bxs-chevron-left' onclick="prevSlide();"></i>
+						<i class='bx bxs-chevron-right' onclick="nextSlide();"></i>*@
 					</div>
-					<div class="chuyen-slide-detail">
-						<img src="@Model.AnhSp" alt="">
-						<img src="@Model.AnhSp" alt="">
-						<img src="@Model.AnhSp" alt="">
-						<img src="@Model.AnhSp" alt="">
-					</div>
+						<div class="zoom-container">
+							<img role="presentation" alt="" src="@Model.AnhSp" class="zoomImg" />
+						</div>
 				</div>
 			</div>
 			<div class="col-md-6 container-detail">
@@ -80,7 +91,25 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-4 title-chitiet">THÀNH PHẦN</div>
-						<div class="col-sm-8 content-chitiet">@Model.MotaSp</div>
+						<div class="col-sm-8 content-chitiet">
+						@if (!string.IsNullOrEmpty(Model.MotaSp))
+						{
+							if (Model.MotaSp.Contains("\n"))
+							{
+								string[] paragraphs = Model.MotaSp.Split('\n');
+								foreach (var paragraph in paragraphs)
+								{
+									<p>@paragraph</p>
+								}
+							}
+							else
+							{
+								// Nếu không có dấu xuống dòng, hiển thị chuỗi nguyên thủy
+								@Model.MotaSp
+							}
+						}
+					</div>
+
 					</div>
 					<div class="row">
 						<div class="col-sm-4 title-chitiet">HƯỚNG DẪN BẢO QUẢN</div>
@@ -175,12 +204,26 @@
 		}
 	</div>
 </div>
-<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script type='text/javascript' src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type='text/javascript'>
-	//var myLink = document.querySelector('a[href="#"]');
-	//								myLink.addEventListener('click', function(e) {
-	//								  e.preventDefault();
-	//								});
+	if (typeof jQuery == 'undefined') {
+        console.log('jQuery is not loaded.');
+    } else {
+        console.log('jQuery is loaded.');
+    }
+    $(document).ready(function () {
+        $('.zoom-container').mousemove(function (e) {
+            var x = e.pageX - $(this).offset().left;
+            var y = e.pageY - $(this).offset().top;
 
+            var offsetX = x / $(this).width() * 100;
+            var offsetY = y / $(this).height() * 100;
+
+            $('.zoomImg').css({
+                'transform-origin': offsetX + '% ' + offsetY + '%'
+            });
+        });
+    });
 </script>
+@*<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>*@
 

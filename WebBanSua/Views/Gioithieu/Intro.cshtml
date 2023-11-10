@@ -2,13 +2,15 @@
 @using Microsoft.EntityFrameworkCore
 
 @model WebBanSua.Models.KhachHang
-
+@{
+     ViewData["Title"] = "Giới Thiệu";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/img/logo.png">
-    <title>Web Bán Sữa Nhóm 2</title>
     <link rel="stylesheet" href="/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="~/css/intro.css" />
     <style>
@@ -53,8 +55,6 @@
 
 <body>
     <div class="main">
-        <!-- Bắt đầu thanh menu navigation -->
-        
         <div class="heading">
             <p class="heading_title">THÔNG TIN TƯ VẤN SỬ DỤNG SỮA</p>
         </div>

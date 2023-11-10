@@ -8,10 +8,18 @@
 	var spBest = Model.Where(p => p.BestSeller == true);
 	var spActive = Model.Where(p => p.TrangThai == true);
 	var searchInput = ViewBag.SearchInput as string;
-	ViewData["Title"] = "Kết quả cho: "+searchInput;
+	ViewData["Title"] = "Kết quả cho: " + (searchInput != null ? searchInput : "null");
+	int pageSize = 9; int pageNumber = 1; 
+	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
+	{
+		int.TryParse(Context.Request.Query["page"], out pageNumber);
+	}
+    int startIndex = (pageNumber - 1) * pageSize;
+    int endIndex = Math.Min(startIndex + pageSize - 1, Model.Count() - 1);
+    var productsToDisplay = Model.Skip(startIndex).Take(endIndex - startIndex + 1).ToList();
 
+	pageNumber = Math.Max(1, pageNumber);
 }
-
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,22 +82,22 @@
 					<div class="best-seller">
 						@foreach (var item in spBest)
 						{
-							<article class="media">
-								<a class="pull-left thumb p-thumb">
-									<img src="@item.AnhSp" style="width:100px;" />
-								</a>
-								<div class="media-body">
+								<article class="media">
+									<a class="pull-left thumb p-thumb">
+										<img src="@item.AnhSp" style="width:100px;" />
+									</a>
+									<div class="media-body">
 									@if (Context.Session.GetString("MaKh") != null)
 									{
-										<a asp-action="Details" asp-route-id="@item.MaSp" class="p-head" style="text-decoration:none;">@item.TenSp</a>
+												<a asp-action="Details" asp-route-id="@item.MaSp" class="p-head" style="text-decoration:none;">@item.TenSp</a>
 									}
 									else
 									{
-										<a asp-action="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">@item.TenSp</a>
+												<a asp-action="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">@item.TenSp</a>
 									}
-									<p>@item.GiaSp.ToString("#,##0") VNĐ</p>
-								</div>
-							</article>
+										<p>@item.GiaSp.ToString("#,##0") VNĐ</p>
+									</div>
+								</article>
 						}
 
 					</div>
@@ -101,37 +109,41 @@
 				<div class="panel-body">
 					<div class="pull-right">
 						<ul class="pagination pagination-sm pro-page-list">
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">»</a></li>
+							<li><a href="?page=1">«</a></li>
+							@for (int i = 1; i <= (int)Math.Ceiling((double)Model.Count() / pageSize); i++)
+							{
+								<li class="@(i == pageNumber ? "active" : "")"><a href="?page=@i">@i</a></li>
+							}
+							<li><a href="?page=@((int)Math.Ceiling((double)Model.Count() / pageSize))">»</a></li>
 						</ul>
 					</div>
 				</div>
 			</section>
 
 			<div class="row product-list">
-				@foreach (var item in Model)
-						{
-						<div class="col-md-4" style="margin-top:30px;">
-							<div class="card">
-								<div class="card-img-product">
-									<img src="@item.AnhSp" alt="">
-								</div>
-								<div class="card-title">
+				@if (Model != null && spActive.Count() > 0)
+				{
+					@foreach (var item in Model)
+					{
+								<div class="col-md-4" style="margin-top:30px;">
+									<div class="card">
+										<div class="card-img-product">
+											<img src="@item.AnhSp" alt="">
+										</div>
+										<div class="card-title">
 									@item.TenSp
-								</div>
-								<div class="card-price">
+										</div>
+										<div class="card-price">
 									@item.GiaSp.ToString("#,##0") VNĐ
-								</div>
-								<div class="card-diseption">
-									<div class="card-size">
-										<h3>Size:</h3>
-										<span>250ml</span>
-										<span>350ml</span>
-										<span>500ml</span>
-									</div>
-									<div class="card-action">
+										</div>
+										<div class="card-diseption">
+											<div class="card-size">
+												<h3>Size:</h3>
+												<span>250ml</span>
+												<span>350ml</span>
+												<span>500ml</span>
+											</div>
+											<div class="card-action">
 										@if (Context.Session.GetString("MaKh") != null)
 										{
 											<button> <a asp-action="Details" asp-route-id="@item.MaSp" style="text-decoration:none; color:white">Mua Ngay</a></button>
@@ -141,11 +153,19 @@
 										{
 											<button> <a asp-action="Login" asp-controller="Home" style="text-decoration:none; color:white">Mua Ngay</a></button>
 										}
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
+					}
+				}else
+                    {
+						<div>
+							 <h3 class="pro_none">Không tìm thấy kết quả </h3>
+							<p >Xin lỗi, nhưng không có gì phù hợp với cụm từ tìm kiếm của bạn. Vui lòng thử lại với một số từ khóa khác nhau.</p>
 						</div>
-						}
+                       
+                    }
 			</div>
 		</div>
 	</div>
