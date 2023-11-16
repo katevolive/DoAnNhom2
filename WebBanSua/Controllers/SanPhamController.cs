@@ -26,6 +26,7 @@ namespace WebBanSua.Controllers
         [Route("/SanPham/Search")]
         public async Task<IActionResult> Search(string searchInput)
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var searchSP = from l in _context.SanPhams.Include(s => s.MaDmNavigation)
                            select l;
             if (!string.IsNullOrWhiteSpace(searchInput))

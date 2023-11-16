@@ -18,11 +18,20 @@
     int startIndex = (pageNumber - 1) * pageSize;
     int endIndex = Math.Min(startIndex + pageSize - 1, Model.Count() - 1);
     var productsToDisplay = Model.Skip(startIndex).Take(endIndex - startIndex + 1).ToList();
-
 	pageNumber = Math.Max(1, pageNumber);
 
+	int pageSizeSeller = 5; 
+	int pageNumberSeller = 1;
+	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
+	{
+		int.TryParse(Context.Request.Query["page"], out pageNumberSeller);
+	}
+    var productsToDisplaySeller = spBest
+        .Skip((pageNumberSeller - 1) * pageSizeSeller)
+        .Take(pageSize)
+        .ToList();
+	pageNumberSeller = Math.Max(1, pageNumberSeller);
 }
-
 
 <head>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -82,7 +91,7 @@
 				</header>
 				<div class="panel-body">
 					<div class="best-seller">
-						@foreach (var item in spBest)
+						@foreach (var item in productsToDisplaySeller)
 						{
 							<article class="media">
 								<a class="pull-left thumb p-thumb">

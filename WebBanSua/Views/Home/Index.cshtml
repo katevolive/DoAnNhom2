@@ -2,7 +2,7 @@
 @using Microsoft.EntityFrameworkCore
 @model IEnumerable<WebBanSua.Models.SanPham> 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
     var spBanChay =  Model.Where(x => x.BestSeller == true);
 }
 <link href='~/css/row_product.css' rel='stylesheet'>
@@ -52,7 +52,11 @@
     							<div class="d-flex justify-content-between align-items-center pt-1">
     								<div>
     									<i class="fa fa-star-o rating-star"></i>
-    									<span class="rating-number">4.8</span>
+    									 <span class="rating-number"></span>
+                                        <script type='text/javascript'>
+                                            var randomNumber = (Math.random() * 0.5 + 4.5).toFixed(1);
+                                            document.write('<span class="rating-number">' + randomNumber + '</span>');
+                                        </script>
     								</div>
                                 @if (Context.Session.GetString("MaKh") != null)
                                 {
@@ -60,7 +64,7 @@
                                 }
                                 else
                                 {
-                                     <span class="buy"><a asp-action="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">Thêm Vào Giỏ +</a></span>
+                                     <span class="buy"><a asp-ac    tion="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">Thêm Vào Giỏ +</a></span>
                                 }
 
     							</div>
@@ -85,6 +89,7 @@
   </div>
       <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
 <script type='text/javascript'>
+
     //const myLink = document.querySelector('a[href="#"]');
     //                            myLink.addEventListener('click', function(event) {
     //                              event.preventDefault();

@@ -127,11 +127,6 @@ namespace WebBanSua.Controllers
                     return View(khachhang);
                 }
                 var checkPhone = _context.KhachHangs.SingleOrDefault(x => x.Phone == khachhang.Phone);
-                if (!IsPhoneNumberValid(checkPhone.Phone))
-                {
-                    ModelState.AddModelError("1", "Số điện thoại phải chứa đúng 9 số.");
-                    return View(khachhang);
-                }
                 if (checkPhone != null)
                 {
                     ModelState.AddModelError("Phone", "Số điện thoại đã tồn tại");

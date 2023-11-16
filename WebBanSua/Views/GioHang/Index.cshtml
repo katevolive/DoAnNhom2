@@ -32,15 +32,17 @@
                         <div class="product-item">
                             <a class="product-thumb" asp-action="Details" asp-controller="SanPham" asp- asp-route-id="@item.sanPham.MaSp"><img src="@item.sanPham.AnhSp" alt="Product"></a>
                             <div class="product-info">
-                                 
                                 <h4 class="product-title"><a asp-action="Details" asp-controller="SanPham" asp-route-id="@item.sanPham.MaSp">@item.sanPham.TenSp</a></h4><span><em>Size:</em> 108ml</span>
+                            </div>
+                            <div id="notification_@item.sanPham.MaSp" style="display: none;margin-left:10%;color: #f23547;">
+                                <p id="notification-message_@item.sanPham.MaSp"></p>
                             </div>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="count-input">
-                           <label for="txtsoLuong">Số Lượng:</label>
-                           <input onclick="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong" name="txtsoLuong" min ="1" max="100" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
+                           <label for="txtsoLuong_@item.sanPham.MaSp">Số Lượng:</label>
+                           <input oninput="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong_@item.sanPham.MaSp" name="txtsoLuong" min ="1" max="@item.sanPham.SoLuong" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
                         </div>
                     </td>
                     <td class="text-center text-lg text-medium">@item.TongTien.ToString("#,##0") VNĐ</td>
@@ -99,23 +101,38 @@
            }
 
            function UpdateCart(Id){
-              $.ajax({
-                   url: '/giohang/update-cart',
-                   type: 'POST',
-                   data:{ maSP: Id, soLuong: $('#txtsoLuong').val()},
-                  success: function(data){ 
-                         console.log(data);
-                         location.reload();
-                           },
-                    error: function(){
-                         Swal.fire({
-                    icon: 'error',
-                    title: 'Thất bại',
-                    text: 'Đã có lỗi xảy ra',
-                     showConfirmButton: false,
-                        timer: 1500
-                    });
+              setTimeout(function () {
+                $.ajax({
+                    url: '/giohang/update-cart',
+                    type: 'POST',
+                    data: { maSP: Id, soLuong: $('#txtsoLuong_'+Id).val() },
+                    success: function (data) {
+                         var notification = $('#notification_' + Id);
+                         var notificationMessage = $('#notification-message_' + Id);
+                        if (data.success) {
+                            console.log(data.message);
+                            location.reload();
+                        } else {
+                            //alert(data.message);
+                            notificationMessage.text(data.message);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        }
+                         notification.show();
+                         setTimeout(function () {notification.hide();}, 5000);
+                     },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thất bại',
+                            text: 'Đã có lỗi xảy ra',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
-               });
+                });
+               }, 400);
            }
+           
        </script>

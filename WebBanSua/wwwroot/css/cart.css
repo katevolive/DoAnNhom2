@@ -155,6 +155,7 @@
     }
 }
 
+
 .shopping-cart-footer {
     display: table;
     width: 100%;
@@ -203,3 +204,4 @@
 .form-control-sm:not(textarea) {
     height: 36px;
 }
+

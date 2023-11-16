@@ -39,68 +39,186 @@ namespace WebBanSua.Controllers
         [Route("/giohang/add-cart")]
         public IActionResult AddToCart(int maSP, int soLuong)
         {
-            List<CartItem> gioHang = GioHang;
             try
             {
-                //Thêm vào giỏ
+                List<CartItem> gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang") ?? new List<CartItem>();
+
+                // Kiểm tra sp có trong giỏ hàng k
                 CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
+
                 if (item != null)
                 {
-                    item.soLuong = item.soLuong + soLuong;
+                    int newQuantity = item.soLuong + soLuong;
 
-                    HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+                    if (newQuantity <= item.sanPham.SoLuong)
+                    {
+                        item.soLuong = newQuantity;
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Số lượng vượt quá tồn kho." });
+                    }
                 }
                 else
                 {
+                    // Nếu sp chưa có trong giỏ hàng, thêm mới
                     SanPham sp = _context.SanPhams.SingleOrDefault(p => p.MaSp == maSP);
-                    item = new CartItem
+
+                    if (sp != null)
                     {
-                        soLuong = soLuong,
-                        sanPham = sp
-                    };
-                    gioHang.Add(item);
+                        if (soLuong <= sp.SoLuong)
+                        {
+                            item = new CartItem
+                            {
+                                soLuong = soLuong,
+                                sanPham = sp
+                            };
+                            gioHang.Add(item);
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Số lượng vượt quá tồn kho." });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Sản phẩm không tồn tại." });
+                    }
                 }
                 HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
 
-                return Json(new { succeess = true });
-
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { succeess = false });
+                return Json(new { success = false, message = "Đã xảy ra lỗi." });
             }
+            //List<CartItem> gioHang = GioHang;
+            //try
+            //{
+            //    //Thêm vào giỏ
+            //    CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
+            //    if (item != null)
+            //    {
+            //        item.soLuong = item.soLuong + soLuong;
+
+            //        HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+            //    }
+            //    else
+            //    {
+            //        SanPham sp = _context.SanPhams.SingleOrDefault(p => p.MaSp == maSP);
+            //        item = new CartItem
+            //        {
+            //            soLuong = soLuong,
+            //            sanPham = sp
+            //        };
+            //        gioHang.Add(item);
+            //    }
+            //    HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+
+            //    return Json(new { succeess = true });
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Json(new { succeess = false });
+            //}
 
         }
-
         [HttpPost]
         [Route("/giohang/update-cart")]
         public IActionResult UpdateCart(int maSP, int soLuong)
         {
-           var gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang");
             try
             {
+                var gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang");
 
-               if(gioHang != null)
+                if (gioHang != null)
                 {
                     CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
+
                     if (item != null)
                     {
-                        item.soLuong = soLuong;
+                        if (soLuong > 0)
+                        {
+                            if (soLuong <= item.sanPham.SoLuong)
+                            {
+                                item.soLuong = soLuong;
+                                HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+                                return Json(new
+                                {
+                                    success = true,
+                                    soLuong = gioHang.Sum(p => p.soLuong)
+                                });
+                            }
+                            else
+                            {
+                                return Json(new
+                                {
+                                    success = false,
+                                    message = "Số lượng vượt quá tồn kho < " + item.sanPham.SoLuong
+                                });
+                            }
+                        }
+                        else
+                        {
+                            gioHang.Remove(item);
+                            HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+
+                            return Json(new
+                            {
+                                success = true,
+                                soLuong = gioHang.Sum(p => p.soLuong)
+                            });
+                        }
                     }
-                    HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
                 }
+
                 return Json(new
                 {
-                    soLuong = GioHang.Sum(p => p.soLuong)
+                    success = false,
+                    message = "Sản phẩm không tồn tại trong giỏ hàng."
                 });
-
             }
             catch (Exception ex)
             {
-                return Json(new { succeess = false });
+                return Json(new
+                {
+                    success = false,
+                    message = "Đã xảy ra lỗi."
+                });
             }
-
         }
+
+        //[HttpPost]
+        //[Route("/giohang/update-cart")]
+        //public IActionResult UpdateCart(int maSP, int soLuong)
+        //{
+        //   var gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang");
+        //    try
+        //    {
+
+        //       if(gioHang != null)
+        //        {
+        //            CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
+        //            if (item != null)
+        //            {
+        //                item.soLuong = soLuong;
+        //            }
+        //            HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+        //        }
+        //        return Json(new
+        //        {
+        //            soLuong = GioHang.Sum(p => p.soLuong)
+        //        });
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { succeess = false });
+        //    }
+
+        //}
 
         [HttpPost]
         [Route("/giohang/remove")]
