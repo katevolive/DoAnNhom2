@@ -7,7 +7,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
       var spBest = Model.Where(p => p.BestSeller == true);
-      var suaTT = Model.Where(p => p.MaDm == 6);
+      var suaTT = Model.Where(p => p.MaDm == 5);
       int pageSize = 9;
 	  int pageNumber = 1;
 
@@ -53,23 +53,22 @@
             <div class="panel-body">
                 <ul class="nav prod-cat">
                     <li>
-                        <a asp-action="SuaTT" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suatietrung.png" alt="" style="width:20px;"> Sữa Tươi Tuyệt Trùng</a>
+                        <a asp-action="SuaTT" asp-controller="SanPham" ><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suatietrung.png" alt="" style="width:20px;"> Sữa Tươi Tuyệt Trùng</a>
                     </li>                   
                     <li>
                         <a asp-action="SuaChua" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suachua.png" alt="" style="width:20px;"> Sữa Chua </a>
                     </li>
                     <li>
-                        <a asp-action="BoPhomat" asp-controller="SanPham" class="active"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-phomat.png" alt="" style="width:20px;"> Bơ - Pho Mát</a>
+                        <a asp-action="BoPhomat" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-phomat.png" alt="" style="width:20px;"> Bơ - Pho Mát</a>
                     </li>
                      <li>
                         <a asp-action="NuocGK" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-nuocgk.png" alt="" style="width:20px;"> Nước Giải Khát</a>
                     </li>
                      <li>
-                        <a asp-action="Kem" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
+                        <a asp-action="Kem" asp-controller="SanPham" class="active"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
                     </li>
                      <li>
                         <a asp-action="SuaHat" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suahat.png" alt="" style="width:20px;"> Sữa Hạt Nguyên Chất</a>
-
                     </li>
                 </ul>
             </div>

@@ -57,13 +57,9 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="slide-detail-product">
-					<div class="dieu-huong-detail">
-						@*<i class='bx bxs-chevron-left' onclick="prevSlide();"></i>
-						<i class='bx bxs-chevron-right' onclick="nextSlide();"></i>*@
+					<div class="zoom-container">
+						<img role="presentation" alt="" src="@Model.AnhSp" class="zoomImg" />
 					</div>
-						<div class="zoom-container">
-							<img role="presentation" alt="" src="@Model.AnhSp" class="zoomImg" />
-						</div>
 				</div>
 			</div>
 			<div class="col-md-6 container-detail">
@@ -71,7 +67,7 @@
 				<div class="gia-chitiet">@Model.GiaSp.ToString("#,##0") VNĐ</div>
 				<div class="card-size">
 					<label for="txtsoLuong">Số Lượng:</label>
-					<input id="txtsoLuong" name="txtsoLuong" min="1" max="@Model.SoLuong" step="1" value="1" type="number" style="width:80px; text-align:center; margin-left:8px;" />
+					<input id="txtsoLuong" name="txtsoLuong" min="1" max="@Model.SoLuong" step="1" value="1" type="number" style="width:80px; text-align:center; margin-left:8px;" onchange="checkNegativeValue(this)"/>
 				</div>
 				<div class="btn-them-gio">
 					<button class="ajax-them-gio" onclick="AddToCart(@Model.MaSp)">Thêm Vào Giỏ <i class='bx bxs-cart-add'></i></button>
@@ -224,6 +220,14 @@
             });
         });
     });
+	 function checkNegativeValue(input) {
+        var enteredValue = parseInt(input.value, 10);
+        var maxLimit = parseInt(input.getAttribute("max"), 10);
+        if (isNaN(enteredValue) || enteredValue < 1 || enteredValue > maxLimit) {
+            alert("Giá trị không hợp lệ. Vui lòng nhập giá trị từ 1 đến " + maxLimit + ".");
+            input.value = 1;
+        }
+    }
 </script>
 @*<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>*@
 

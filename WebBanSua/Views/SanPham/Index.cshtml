@@ -7,10 +7,8 @@
 	Layout = "~/Views/Shared/_ProductLayout.cshtml";
 	var spBest = Model.Where(p => p.BestSeller == true);
 	var spActive = Model.Where(p => p.TrangThai == true);
-	int pageSize = 9; // Đặt số sản phẩm trên mỗi trang
-
-	int pageNumber = 1; // Mặc định là trang đầu tiên
-
+	int pageSize = 9; 
+	int pageNumber = 1;
 	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
 	{
 		int.TryParse(Context.Request.Query["page"], out pageNumber);
@@ -72,10 +70,10 @@
 							<a asp-action="BoPhomat" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-phomat.png" alt="" style="width:20px;"> Bơ - Pho Mát</a>
 						</li>
 						<li>
-							<a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-nuocgk.png" alt="" style="width:20px;"> Nước Giải Khát</a>
+							<a asp-action="NuocGK" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-nuocgk.png" alt="" style="width:20px;"> Nước Giải Khát</a>
 						</li>
 						<li>
-							<a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
+							<a asp-action="Kem" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
 						</li>
 						<li>
 							<a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suahat.png" alt="" style="width:20px;"> Sữa Hạt Nguyên Chất</a>
@@ -177,7 +175,7 @@
 					<div class="col-md-4" style="margin-top:30px;">
 						<div class="card">
 							<div class="card-img-product">
-								<img src="@item.AnhSp" alt="">
+								<img style="background-color: transparent;" src="@item.AnhSp" alt="">
 							</div>
 							<div class="card-title">
 								@item.TenSp

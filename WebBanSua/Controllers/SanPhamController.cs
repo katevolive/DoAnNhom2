@@ -93,8 +93,23 @@ namespace WebBanSua.Controllers
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
+        public async Task<IActionResult> NuocGK()
+        {
+            var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
+            return View(await cuaHangBanSuaContext.ToListAsync());
+        }
+        public async Task<IActionResult> Kem()
+        {
+            var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
+            return View(await cuaHangBanSuaContext.ToListAsync());
+        }
+        public async Task<IActionResult> SuaHat()
+        {
+            var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
+            return View(await cuaHangBanSuaContext.ToListAsync());
+        }
 
-        public async Task<IActionResult> Intro()
+        public  IActionResult Intro()
         {
             return View();
         }

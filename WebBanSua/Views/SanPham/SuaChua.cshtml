@@ -6,8 +6,19 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
-      var spBest =Model.Where(p => p.BestSeller == true);
+      var spBest = Model.Where(p => p.BestSeller == true);
       var suaTT = Model.Where(p => p.MaDm == 1);
+      int pageSize = 9;
+	  int pageNumber = 1;
+
+	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
+	{
+		int.TryParse(Context.Request.Query["page"], out pageNumber);
+	}
+    int startIndex = (pageNumber - 1) * pageSize;
+    int endIndex = Math.Min(startIndex + pageSize - 1, suaTT.Count() - 1);
+    var productsToDisplay = suaTT.Skip(startIndex).Take(endIndex - startIndex + 1).ToList();
+	pageNumber = Math.Max(1, pageNumber);
 }
 
 
@@ -21,19 +32,18 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-     <div id="header" class="location-page" style="margin-bottom:20px;">
+       <div id="header" class="location-page" style="margin-bottom:20px;">
             <section class="c-breadcrumbs">
                 <div class="container">
                     <span class="item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></span>
-                      <span class="item"> > Sữa Chua Nguyên Chất</span>
+                      <span class="item"> > Kem </span>
                 </div>
               </section>
         </div>
 <div class="container bootdey" style="margin-top:20px;">
     <div class="col-md-3">
-        <section class="panel">
+        <section style="padding-bottom:41px" class="panel">
             <div class="panel-body">
-                <input type="text" placeholder="Tìm Sản Phẩm" class="form-control" />
             </div>
         </section>
         <section class="panel">
@@ -52,13 +62,14 @@
                         <a asp-action="BoPhomat" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-phomat.png" alt="" style="width:20px;"> Bơ - Pho Mát</a>
                     </li>
                      <li>
-                        <a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-nuocgk.png" alt="" style="width:20px;"> Nước Giải Khát</a>
+                        <a asp-action="NuocGK" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-nuocgk.png" alt="" style="width:20px;"> Nước Giải Khát</a>
                     </li>
                      <li>
-                        <a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
+                        <a asp-action="Kem" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-kem.png" alt="" style="width:20px;"> Kem Các Loại</a>
                     </li>
                      <li>
-                        <a href=""><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suahat.png" alt="" style="width:20px;"> Sữa Hạt Nguyên Chất</a>
+                        <a asp-action="SuaHat" asp-controller="SanPham"><i class="fa fa-angle-right"></i> <img src="~/img/category/ic-suahat.png" alt="" style="width:20px;"> Sữa Hạt Nguyên Chất</a>
+                        
                     </li>
                 </ul>
             </div>
@@ -78,7 +89,7 @@
                             <img src="@item.AnhSp" style="width:100px;"/>
                         </a>
                         <div class="media-body">
-                            @if (Context.Session.GetString("MaKh") != null)
+                           @if (Context.Session.GetString("MaKh") != null)
                                     {
                                         <a asp-action="Details" asp-route-id="@item.MaSp" class="p-head" style="text-decoration:none;">@item.TenSp</a>
                                     }
@@ -97,20 +108,22 @@
     </div>
     <div class="col-md-9">
         <section class="panel">
-            <div class="panel-body">
-                <div class="pull-right">
-                    <ul class="pagination pagination-sm pro-page-list">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">»</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+				<div class="panel-body">
+					<div class="pull-right">
+						<ul class="pagination pagination-sm pro-page-list">
+							<li><a href="?page=1">«</a></li>
+							@for (int i = 1; i <= (int)Math.Ceiling((double)suaTT.Count() / pageSize); i++)
+							{
+								<li class="@(i == pageNumber ? "active" : "")"><a href="?page=@i">@i</a></li>
+							}
+							<li><a href="?page=@((int)Math.Ceiling((double)suaTT.Count() / pageSize))">»</a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
 
         <div class="row product-list">
-            @foreach (var item in suaTT)
+            @foreach (var item in productsToDisplay)
            {
                 <div class="col-md-4" style="margin-top:30px;">
                 <div class="card">
@@ -140,7 +153,7 @@
                                     {
                                         <button> <a asp-action="Login" asp-controller="Home" style="text-decoration:none; color:white">Mua Ngay</a></button>
                                     }
-                    </div>
+                                </div>
                 </div>
             </div>
             </div>

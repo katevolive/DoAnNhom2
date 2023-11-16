@@ -80,14 +80,14 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label asp-for="SoLuong" class="control-label">Số Lượng</label>
-                <input asp-for="SoLuong" class="form-control" />
+                <input asp-for="SoLuong" class="form-control" onchange="checkNegativeValue(this)" />
                 <span asp-validation-for="SoLuong" class="text-danger"></span>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                    <label asp-for="CreateDate" class="control-label">Ngày Tạo</label>
-                <input asp-for="CreateDate" class="form-control" />
+                <input asp-for="CreateDate" class="form-control" disabled/>
                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                   </div>
                 </div>
@@ -118,6 +118,14 @@
 </div>
 </div>
 
-<script>
+<script type='text/javascript'>
 var simplemde = new SimpleMDE({ element: document.getElementById("motasp") });
+function checkNegativeValue(input) {
+        var enteredValue = parseInt(input.value, 10);
+
+        if (enteredValue < 0) {
+            alert("Giá trị không thể là số âm. Vui lòng nhập giá trị hợp lệ.");
+            input.value = 1; 
+        }
+    }
 </script>

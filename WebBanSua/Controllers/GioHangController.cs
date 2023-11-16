@@ -91,39 +91,8 @@ namespace WebBanSua.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Đã xảy ra lỗi." });
+                return Json(new { success = false, message = "Đã xảy ra lỗi." +ex });
             }
-            //List<CartItem> gioHang = GioHang;
-            //try
-            //{
-            //    //Thêm vào giỏ
-            //    CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
-            //    if (item != null)
-            //    {
-            //        item.soLuong = item.soLuong + soLuong;
-
-            //        HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
-            //    }
-            //    else
-            //    {
-            //        SanPham sp = _context.SanPhams.SingleOrDefault(p => p.MaSp == maSP);
-            //        item = new CartItem
-            //        {
-            //            soLuong = soLuong,
-            //            sanPham = sp
-            //        };
-            //        gioHang.Add(item);
-            //    }
-            //    HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
-
-            //    return Json(new { succeess = true });
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Json(new { succeess = false });
-            //}
-
         }
         [HttpPost]
         [Route("/giohang/update-cart")]
@@ -173,7 +142,6 @@ namespace WebBanSua.Controllers
                         }
                     }
                 }
-
                 return Json(new
                 {
                     success = false,
@@ -185,40 +153,10 @@ namespace WebBanSua.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "Đã xảy ra lỗi."
+                    message = "Đã xảy ra lỗi. "+ex
                 });
             }
         }
-
-        //[HttpPost]
-        //[Route("/giohang/update-cart")]
-        //public IActionResult UpdateCart(int maSP, int soLuong)
-        //{
-        //   var gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang");
-        //    try
-        //    {
-
-        //       if(gioHang != null)
-        //        {
-        //            CartItem item = gioHang.SingleOrDefault(p => p.sanPham.MaSp == maSP);
-        //            if (item != null)
-        //            {
-        //                item.soLuong = soLuong;
-        //            }
-        //            HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
-        //        }
-        //        return Json(new
-        //        {
-        //            soLuong = GioHang.Sum(p => p.soLuong)
-        //        });
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { succeess = false });
-        //    }
-
-        //}
 
         [HttpPost]
         [Route("/giohang/remove")]
