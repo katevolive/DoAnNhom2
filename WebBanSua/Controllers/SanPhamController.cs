@@ -36,15 +36,6 @@ namespace WebBanSua.Controllers
             }
             return View(await searchSP.ToListAsync());
         }
-            //if (!string.IsNullOrWhiteSpace(searchInput))
-            //{
-            //    ViewBag.SearchInput = searchInput;
-            //    var searchSanPham = _context.SanPhams
-            //                .Where(result => result.TenSp.Contains(searchInput))
-            //                .Include(s => s.MaDmNavigation);
-            //    return View(await searchSanPham.ToListAsync());
-            //}
-            //return View();
         public async Task<IActionResult> Search2(string id)
         {
             var searchSanPham = _context.SanPhams.Include(s => s.MaDmNavigation);
