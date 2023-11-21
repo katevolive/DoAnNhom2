@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "UserDashboard";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
+    var ShowAdminDiv = ViewBag.ShowAdminDiv as string;
 }
 
 <head>
@@ -37,6 +38,12 @@
                     <a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="DonHangs" role="tab">
                      <i class='bx bx-shopping-bag' ></i> Đơn Mua
                     </a>
+                    @if (ViewBag.ShowAdminDiv == 1)
+                        {
+                            <a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="Admin" role="tab">
+                                <i class='bx bx-home' ></i> Admin
+                            </a>
+                        }
                     <a class="list-group-item list-group-item-action" asp-action="Logout" asp-controller="Home" role="tab">
                      <i class='bx bx-log-out-circle' ></i> Đăng xuất
                     </a>

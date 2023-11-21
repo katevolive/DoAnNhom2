@@ -17,15 +17,11 @@ namespace WebBanSua.Controllers
         {
             _context = context;
         }
-
-
         public async Task<IActionResult> Index()
         {
             var cuaHangBanSuaContext = _context.DonHangs.Include(d => d.MaKhNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
-
-
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,8 +39,6 @@ namespace WebBanSua.Controllers
 
             return View(donHang);
         }
-
-
         public IActionResult Create()
         {
             ViewData["MaKh"] = new SelectList(_context.KhachHangs, "MaKh", "Email");
@@ -64,8 +58,6 @@ namespace WebBanSua.Controllers
             ViewData["MaKh"] = new SelectList(_context.KhachHangs, "MaKh", "Email", donHang.MaKh);
             return View(donHang);
         }
-
-
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +73,6 @@ namespace WebBanSua.Controllers
             ViewData["MaKh"] = new SelectList(_context.KhachHangs, "MaKh", "Email", donHang.MaKh);
             return View(donHang);
         }
-
  
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -115,8 +106,6 @@ namespace WebBanSua.Controllers
             ViewData["MaKh"] = new SelectList(_context.KhachHangs, "MaKh", "Email", donHang.MaKh);
             return View(donHang);
         }
-
-
         private bool DonHangExists(int id)
         {
             return _context.DonHangs.Any(e => e.MaDh == id);

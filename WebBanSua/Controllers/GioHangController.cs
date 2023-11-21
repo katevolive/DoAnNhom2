@@ -12,7 +12,6 @@ namespace WebBanSua.Controllers
     public class GioHangController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
-
         public GioHangController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -94,6 +93,7 @@ namespace WebBanSua.Controllers
                 return Json(new { success = false, message = "Đã xảy ra lỗi." +ex });
             }
         }
+
         [HttpPost]
         [Route("/giohang/update-cart")]
         public IActionResult UpdateCart(int maSP, int soLuong)
@@ -179,14 +179,10 @@ namespace WebBanSua.Controllers
             }
 
         }
-
         public ActionResult CleanCart()
         {
             HttpContext.Session.Remove("GioHang");
             return RedirectToAction("Index");
-
         }
-
-       
     }
 }

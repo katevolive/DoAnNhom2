@@ -11,7 +11,6 @@ namespace WebBanSua.Models
         public string TaiKhoan { get; set; }
         public int RoleId { get; set; }
         public DateTime CreateDate { get; set; }
-
         public virtual RoleAccount Role { get; set; }
     }
 }

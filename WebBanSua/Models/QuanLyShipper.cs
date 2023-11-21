@@ -13,7 +13,6 @@ namespace WebBanSua.Models
         public DateTime NgayLayHang { get; set; }
         public int Phone { get; set; }
         public string TenCongty { get; set; }
-
         public virtual DonHang MaDhNavigation { get; set; }
     }
 }

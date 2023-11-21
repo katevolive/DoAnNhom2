@@ -11,9 +11,7 @@ namespace WebBanSua.Controllers
 {
     public class HomeController : Controller
     {
-      
         private readonly CuaHangBanSuaContext _context;
-
         public HomeController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -31,7 +29,7 @@ namespace WebBanSua.Controllers
             var maKH = HttpContext.Session.GetString("MaKh");
             id = int.Parse(maKH);
             var customerUser = await _context.KhachHangs.FindAsync(id);
-
+            
             return View(customerUser);
         }
 
@@ -63,7 +61,6 @@ namespace WebBanSua.Controllers
                 }
             }
             return View(customer);
-
         }
 
         public async Task<IActionResult> UserDashboard(int id)
@@ -71,6 +68,15 @@ namespace WebBanSua.Controllers
             var maKH = HttpContext.Session.GetString("MaKh");
             id = int.Parse(maKH);
             var customerUser = await _context.KhachHangs.FindAsync(id);
+            if (customerUser != null)
+            {
+                var accountUser = await _context.Accounts.FirstOrDefaultAsync(a => a.TaiKhoan == customerUser.Email);
+                if (accountUser != null)
+                {
+                    int roleId = accountUser.RoleId;
+                    ViewBag.ShowAdminDiv = roleId;
+                }
+            }
             return View(customerUser);
         }
 
@@ -200,10 +206,9 @@ namespace WebBanSua.Controllers
             }
             return View();
         }
-        //Logout
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();//remove session
+            HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

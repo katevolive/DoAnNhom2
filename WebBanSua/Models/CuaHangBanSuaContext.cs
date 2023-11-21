@@ -8,12 +8,10 @@ namespace WebBanSua.Models
         public CuaHangBanSuaContext()
         {
         }
-
         public CuaHangBanSuaContext(DbContextOptions<CuaHangBanSuaContext> options)
             : base(options)
         {
         }
-
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DbSet<DanhMucSp> DanhMucSps { get; set; }

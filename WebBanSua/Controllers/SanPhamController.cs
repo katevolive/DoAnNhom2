@@ -11,7 +11,6 @@ namespace WebBanSua.Controllers
     public class SanPhamController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
-
         public SanPhamController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -104,8 +103,6 @@ namespace WebBanSua.Controllers
         {
             return View();
         }
-
-
         private bool SanPhamExists(int id)
         {
             return _context.SanPhams.Any(e => e.MaSp == id);

@@ -10,8 +10,6 @@ namespace WebBanSua.Controllers
     public class TinTucController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
-
-
         public TinTucController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -49,7 +47,5 @@ namespace WebBanSua.Controllers
 
             return View(tinTuc);
         }
-
-       
     }
 }

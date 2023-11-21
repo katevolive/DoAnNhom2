@@ -27,7 +27,15 @@
             Ảnh Khách Hàng:
         </dt>
         <dd class = "col-sm-10">
-        <img src="@Html.DisplayFor(model => model.AvatarKh)" style="width:200px;">
+            @{
+                string avatarPath = Model.AvatarKh ?? "https://bootdey.com/img/Content/avatar/avatar1.png";
+                if (!avatarPath.StartsWith("http"))
+                {
+                    avatarPath = $"~/img/product/{avatarPath}";
+                }
+            }
+            <img src="@Url.Content(avatarPath)" style="width:200px;">
+            @*<img src="~/img/product/@(Model.AvatarKh ?? "https://bootdey.com/img/Content/avatar/avatar1.png")" style="width:200px;">*@
         </dd>
         <dt class = "col-sm-2">
            Tên Khách Hàng:

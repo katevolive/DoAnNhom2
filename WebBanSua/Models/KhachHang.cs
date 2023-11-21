@@ -11,7 +11,6 @@ namespace WebBanSua.Models
         {
             DonHangs = new HashSet<DonHang>();
         }
-
         public int MaKh { get; set; }
         public string TenKh { get; set; }
         public string GioiTinh { get; set; }
@@ -22,7 +21,6 @@ namespace WebBanSua.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime CreateDate { get; set; }
-
         public virtual ICollection<DonHang> DonHangs { get; set; }
         public enum Gender
         {

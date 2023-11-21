@@ -11,11 +11,9 @@ namespace WebBanSua.Models
         {
             Accounts = new HashSet<Account>();
         }
-
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Mota { get; set; }
-
         public virtual ICollection<Account> Accounts { get; set; }
     }
 }

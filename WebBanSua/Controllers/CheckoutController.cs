@@ -19,8 +19,6 @@ namespace WebBanSua.Controllers
         {
             _context = context;
         }
-
-
         public async Task<IActionResult> Index(int id)
         {
             var maKH = HttpContext.Session.GetString("MaKh");

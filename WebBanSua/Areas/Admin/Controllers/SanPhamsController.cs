@@ -59,6 +59,14 @@ namespace WebBanSua.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(sanPham.MotaSp))
+                {
+                    ModelState.AddModelError("MotaSp", "Mô tả không được để trống");
+                    ViewData["MaDm"] = new SelectList(_context.DanhMucSps, "MaDm", "TenDm", sanPham.MaDm);
+                    return View(sanPham);
+                }
+
+                sanPham.CreateDate = DateTime.Now;
                 _context.Add(sanPham);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

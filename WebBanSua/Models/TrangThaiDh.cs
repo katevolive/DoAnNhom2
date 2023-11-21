@@ -11,7 +11,6 @@ namespace WebBanSua.Models
         public int MaDh { get; set; }
         public string TrangThai { get; set; }
         public string Mota { get; set; }
-
         public virtual DonHang MaDhNavigation { get; set; }
     }
 }
