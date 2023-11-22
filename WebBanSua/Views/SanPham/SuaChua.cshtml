@@ -4,7 +4,7 @@
 @model IEnumerable<WebBanSua.Models.SanPham> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sữa Chua";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
       var spBest = Model.Where(p => p.BestSeller == true);
       var suaTT = Model.Where(p => p.MaDm == 1);
@@ -36,7 +36,7 @@
             <section class="c-breadcrumbs">
                 <div class="container">
                     <span class="item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></span>
-                      <span class="item"> > Kem </span>
+                      <span class="item"> > Sữa Chua </span>
                 </div>
               </section>
         </div>

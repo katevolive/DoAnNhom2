@@ -12,6 +12,8 @@ namespace WebBanSua.Controllers
     public class GioHangController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
+        private static bool isDiscountApplied = false;
+
         public GioHangController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -31,6 +33,68 @@ namespace WebBanSua.Controllers
                     gh = new List<CartItem>();
                 }
                 return gh;
+            }
+        }
+        [HttpPost]
+        [Route("/giohang/apply-discount")]
+        public IActionResult ApplyDiscount(string maGiamGia)
+        {
+            try
+            {
+                var gioHang = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                if (isDiscountApplied)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Bạn đã áp dụng mã giảm giá rồi."
+                    });
+                }
+                if (gioHang != null && gioHang.Count > 0)
+                {
+                    if (maGiamGia == "GIAMGIA")
+                    {
+                        decimal totalDiscount = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong * 0.1m); // 10% giảm giá
+                        int totalAmount = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong);
+                        decimal discountPerCartItem = totalDiscount / totalAmount;
+                        foreach (var item in gioHang)
+                        {
+                            item.sanPham.GiaSp -= (int)(item.sanPham.GiaSp * discountPerCartItem);
+                        }
+                        HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+                        isDiscountApplied = true;
+
+                        return Json(new
+                        {
+                            success = true,
+                            message = "Đã áp dụng giảm giá thành công."
+                        });
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Mã giảm giá không hợp lệ."
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Giỏ hàng đang trống hoặc không tồn tại sản phẩm."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Đã xảy ra lỗi. " + ex.Message
+                });
             }
         }
 

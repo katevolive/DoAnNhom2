@@ -4,7 +4,7 @@
 @model IEnumerable<WebBanSua.Models.SanPham> 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sữa Tiệt Trùng";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
       var spBest = Model.Where(p => p.BestSeller == true);
       var suaTT = Model.Where(p => p.MaDm == 2);

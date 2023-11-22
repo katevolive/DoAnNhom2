@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @model List<WebBanSua.ModelViews.CartItem>
 @{
-    ViewData["Title"] = "GioHang";
+    ViewData["Title"] = "Giỏ Hàng";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
 }
 
@@ -55,11 +55,13 @@
     </div>
     <div class="shopping-cart-footer">
         <div class="column">
-            <form class="coupon-form" method="post">
-                <input class="form-control form-control-sm" type="text" placeholder="Mã giảm giá" required="">
-                <button class="btn btn-outline-primary btn-sm" type="submit">Áp dụng</button>
+            <form class="coupon-form" method="post" id="discount-form">
+                <label for="discount-code" class="sr-only">Mã giảm giá</label>
+                <input id="discount-code" class="form-control form-control-sm" type="text" placeholder="Mã giảm giá" required="">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="applyDiscount()">Áp dụng</button>
             </form>
         </div>
+
         <div class="column text-lg">Tổng tiền: <span class="text-medium">@Model.Sum(x=> x.TongTien).ToString("#,##0") VNĐ</span></div>
     </div>
         }
@@ -78,7 +80,26 @@
 
 
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-       <script type="text/javascript">
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script type="text/javascript">
+    function applyDiscount() {
+        $.ajax({
+            url: '/giohang/apply-discount',
+            type: 'POST',
+            data: { maGiamGia: $('#discount-code').val() },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi khi áp dụng giảm giá.');
+            }
+        });
+    }
            function RemoveCart(Id){
               $.ajax({
                    url: '/giohang/remove',

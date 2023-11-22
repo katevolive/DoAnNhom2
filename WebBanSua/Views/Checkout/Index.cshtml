@@ -4,7 +4,7 @@
 @using static WebBanSua.Models.KhachHang
 @model WebBanSua.Models.KhachHang
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Thanh Toán";
 	Layout = "~/Views/Shared/_ProductLayout.cshtml";
 	var cartCheckout = Context.Session.Get<List<CartItem>>("GioHang");
 }
@@ -57,14 +57,14 @@
 					</li>
 
 				</ul>
-				<form class="card p-2">
+				@*<form class="card p-2">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Mã Giảm Giá">
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-secondary">Nhập</button>
 						</div>
 					</div>
-				</form>
+				</form>*@
 			</div>
 			<div class="col-md-8 order-md-1">
 				<h4 class="mb-3">Thông Tin Người Nhận</h4>

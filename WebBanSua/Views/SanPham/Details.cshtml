@@ -2,7 +2,7 @@
 @model WebBanSua.Models.SanPham
 
 @{
-	ViewData["Title"] = "Details";
+	ViewData["Title"] = "Chi Tiết Sản Phẩm";
 	Layout = "~/Views/Shared/_ProductLayout.cshtml";
 	WebBanSua.Models.CuaHangBanSuaContext db = new WebBanSua.Models.CuaHangBanSuaContext();
 	var danhMuc1 = db.SanPhams.Where(x => x.BestSeller == true);
