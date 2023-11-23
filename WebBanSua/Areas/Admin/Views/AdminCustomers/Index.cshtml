@@ -40,7 +40,14 @@
                       <td>
                         <div class="d-flex px-2">
                           <div>
-                            <img src="~/img/product/@Html.DisplayFor(modelItem => item.AvatarKh)" class="avatar avatar-sm me-2">
+                            @{
+							string avatarPath = item.AvatarKh ?? "https://bootdey.com/img/Content/avatar/avatar1.png";
+							if (!avatarPath.StartsWith("http"))
+							{
+								avatarPath = $"~/img/product/{avatarPath}";
+							}
+						}
+						<img src="@Url.Content(avatarPath)" class="avatar avatar-sm me-2>
                           </div>
                           <div class="my-auto">
                             <h6 class="mb-0 text-sm font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.TenKh)</h6>

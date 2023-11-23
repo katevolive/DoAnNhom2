@@ -1,6 +1,7 @@
 ﻿
 @using Microsoft.AspNetCore.Http
 @using Microsoft.EntityFrameworkCore
+@using WebBanSua.ModelViews
 @model IEnumerable<WebBanSua.Models.SanPham> 
 
 @{
@@ -11,14 +12,16 @@
       int pageSize = 9;
 	  int pageNumber = 1;
 
-	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
-	{
-		int.TryParse(Context.Request.Query["page"], out pageNumber);
-	}
-    int startIndex = (pageNumber - 1) * pageSize;
-    int endIndex = Math.Min(startIndex + pageSize - 1, suaTT.Count() - 1);
-    var productsToDisplay = suaTT.Skip(startIndex).Take(endIndex - startIndex + 1).ToList();
-	pageNumber = Math.Max(1, pageNumber);
+	//if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
+	//{
+	//	int.TryParse(Context.Request.Query["page"], out pageNumber);
+	//}
+ //   int startIndex = (pageNumber - 1) * pageSize;
+ //   int endIndex = Math.Min(startIndex + pageSize - 1, suaTT.Count() - 1);
+ //   var productsToDisplay = suaTT.Skip(startIndex).Take(endIndex - startIndex + 1).ToList();
+	//pageNumber = Math.Max(1, pageNumber);
+
+    var (productsToDisplay, totalPages, currentPage) = PaginationHelper.GetPagedItems(suaTT, pageSize, Context);
 }
 
 

@@ -34,15 +34,15 @@
                             <div class="product-info">
                                 <h4 class="product-title"><a asp-action="Details" asp-controller="SanPham" asp-route-id="@item.sanPham.MaSp">@item.sanPham.TenSp</a></h4><span><em>Size:</em> 108ml</span>
                             </div>
-                            <div id="notification_@item.sanPham.MaSp" style="display: none;margin-left:10%;color: #f23547;">
-                                <p id="notification-message_@item.sanPham.MaSp"></p>
+                            <div id="notification_@item.sanPham.MaSp" style="display: none;margin-left:10%;">
+                                <p style="color:#f23547;" id="notification-message_@item.sanPham.MaSp"></p>
                             </div>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="count-input">
                            <label for="txtsoLuong_@item.sanPham.MaSp">Số Lượng:</label>
-                           <input oninput="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong_@item.sanPham.MaSp" name="txtsoLuong" min ="1" max="@item.sanPham.SoLuong" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
+                           <input oninput="onInputDelay(@item.sanPham.MaSp)" id="txtsoLuong_@item.sanPham.MaSp" name="txtsoLuong" min ="1" max="@item.sanPham.SoLuong" step="1" value="@item.soLuong" type="number" style="width:80px; text-align:center; margin-left:8px;"/>
                         </div>
                     </td>
                     <td class="text-center text-lg text-medium">@item.TongTien.ToString("#,##0") VNĐ</td>
@@ -73,33 +73,44 @@
     <div class="shopping-cart-footer">
         <div class="column"><a class="btn btn-outline-secondary" asp-action="Index" asp-controller="SanPham"><i class="icon-arrow-left"></i>&nbsp;Quay Lại Mua Thêm</a></div>
         
-            <div class="column"><a class="btn btn-success" asp-action="Index" asp-controller="Checkout">Mua Hàng</a></div>
+              @if (Model != null && Model.Count() > 0)
+    {
+        <div class="column">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Checkout" id="btnMuaHang">Mua Hàng</a>
+        </div>
+    }
        
     </div>
 </div>
 
 
- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script type="text/javascript">
-    function applyDiscount() {
-        $.ajax({
-            url: '/giohang/apply-discount',
-            type: 'POST',
-            data: { maGiamGia: $('#discount-code').val() },
-            success: function (data) {
-                if (data.success) {
-                    alert(data.message);
-                    location.reload();
-                } else {
-                    alert(data.message);
+     $(document).ready(function () {
+        var soLuongSanPhamTrongGioHang = @Model.Count();
+        if (soLuongSanPhamTrongGioHang === 0) {
+            $('#btnMuaHang').prop('disabled', true);
+        }
+    });
+        function applyDiscount() {
+            $.ajax({
+                url: '/giohang/apply-discount',
+                type: 'POST',
+                data: { maGiamGia: $('#discount-code').val() },
+                success: function (data) {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert('Đã xảy ra lỗi khi áp dụng giảm giá.');
                 }
-            },
-            error: function () {
-                alert('Đã xảy ra lỗi khi áp dụng giảm giá.');
-            }
-        });
-    }
+            });
+        }
            function RemoveCart(Id){
               $.ajax({
                    url: '/giohang/remove',
@@ -121,6 +132,13 @@
                });
            }
 
+           var timeout;
+
+        function onInputDelay(Id) {
+            setTimeout(function() {
+                UpdateCart(Id);
+            }, 1000); 
+        }
            function UpdateCart(Id){
               setTimeout(function () {
                 $.ajax({

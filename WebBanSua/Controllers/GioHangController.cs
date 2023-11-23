@@ -195,13 +195,14 @@ namespace WebBanSua.Controllers
                         }
                         else
                         {
-                            gioHang.Remove(item);
-                            HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
+                            //gioHang.Remove(item);
+                            //HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
 
                             return Json(new
                             {
-                                success = true,
-                                soLuong = gioHang.Sum(p => p.soLuong)
+                                success = false,
+                                message = "Giá trị không hợp lệ."
+                                //soLuong = gioHang.Sum(p => p.soLuong)
                             });
                         }
                     }
@@ -233,13 +234,14 @@ namespace WebBanSua.Controllers
                 if (item != null)
                 {
                     gioHang.Remove(item);
+                    HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
                 }
-                HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
-                return Json(new { succeess = true });
+                return Json(new { success = true,
+                                  message = "Xóa thành công." });
             }
             catch
             {
-                return Json(new { succeess = false });
+                return Json(new { success = false });
             }
 
         }

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.EntityFrameworkCore
+@using WebBanSua.ModelViews
 @model IEnumerable<WebBanSua.Models.SanPham>
 
 @{
@@ -19,16 +20,8 @@
 	pageNumber = Math.Max(1, pageNumber);
 
 	int pageSizeSeller = 5; 
-	int pageNumberSeller = 1;
-	if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
-	{
-		int.TryParse(Context.Request.Query["page"], out pageNumberSeller);
-	}
-    var productsToDisplaySeller = spBest
-        .Skip((pageNumberSeller - 1) * pageSizeSeller)
-        .Take(pageSize)
-        .ToList();
-	pageNumberSeller = Math.Max(1, pageNumberSeller);
+    var (productsToDisplaySeller, totalPages, currentPage) = PaginationHelper.GetPagedItems(spBest, pageSizeSeller, Context);
+
 }
 
 <head>
