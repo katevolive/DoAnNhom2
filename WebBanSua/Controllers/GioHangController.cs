@@ -129,12 +129,16 @@ namespace WebBanSua.Controllers
 
                     if (sp != null)
                     {
+
                         if (soLuong <= sp.SoLuong)
                         {
+                            decimal finalPrice = CalculateFinalPrice(sp);
+
                             item = new CartItem
                             {
                                 soLuong = soLuong,
-                                sanPham = sp
+                                sanPham = sp,
+                                finalPrice = finalPrice,
                             };
                             gioHang.Add(item);
                         }
@@ -156,6 +160,11 @@ namespace WebBanSua.Controllers
             {
                 return Json(new { success = false, message = "Đã xảy ra lỗi." +ex });
             }
+        }
+        private decimal CalculateFinalPrice(SanPham sp)
+        {
+            decimal giaGiamGia = sp.BestSeller ? sp.GiaSp * 0.20m : 0;
+            return giaGiamGia;
         }
 
         [HttpPost]
