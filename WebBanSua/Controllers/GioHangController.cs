@@ -12,7 +12,7 @@ namespace WebBanSua.Controllers
     public class GioHangController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
-        private static bool isDiscountApplied = false;
+        public static bool isDiscountApplied = false;
 
         public GioHangController(CuaHangBanSuaContext context)
         {
@@ -61,9 +61,8 @@ namespace WebBanSua.Controllers
                         {
                             item.sanPham.GiaSp -= (int)(item.sanPham.GiaSp * discountPerCartItem);
                         }
-                        HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
                         isDiscountApplied = true;
-
+                        HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
                         return Json(new
                         {
                             success = true,
@@ -75,7 +74,7 @@ namespace WebBanSua.Controllers
                         return Json(new
                         {
                             success = false,
-                            message = "Mã giảm giá không hợp lệ."
+                            message = "Mã giảm giá không hợp lệ hoặc bị sai."
                         });
                     }
                 }
@@ -152,6 +151,7 @@ namespace WebBanSua.Controllers
                         return Json(new { success = false, message = "Sản phẩm không tồn tại." });
                     }
                 }
+                ApplyDiscountIfNeeded(gioHang);
                 HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
 
                 return Json(new { success = true });
@@ -161,6 +161,25 @@ namespace WebBanSua.Controllers
                 return Json(new { success = false, message = "Đã xảy ra lỗi." +ex });
             }
         }
+        private void ApplyDiscountIfNeeded(List<CartItem> gioHang)
+        {
+            if (isDiscountApplied)
+            {
+                decimal totalAmount = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong);
+                if (totalAmount > 0)
+                {
+                    decimal totalDiscount = totalAmount * 0.1m; // 10% giảm giá
+                    decimal discountPerCartItem = totalDiscount / totalAmount;
+
+                    foreach (var item in gioHang)
+                    {
+                        item.sanPham.GiaSp -= (int)(item.sanPham.GiaSp * discountPerCartItem);
+                    }
+                    isDiscountApplied = false;
+                }
+            }
+        }
+
         private decimal CalculateFinalPrice(SanPham sp)
         {
             decimal giaGiamGia = sp.BestSeller ? sp.GiaSp * 0.20m : 0;
@@ -204,14 +223,10 @@ namespace WebBanSua.Controllers
                         }
                         else
                         {
-                            //gioHang.Remove(item);
-                            //HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
-
                             return Json(new
                             {
                                 success = false,
                                 message = "Giá trị không hợp lệ."
-                                //soLuong = gioHang.Sum(p => p.soLuong)
                             });
                         }
                     }
@@ -252,7 +267,6 @@ namespace WebBanSua.Controllers
             {
                 return Json(new { success = false });
             }
-
         }
         public ActionResult CleanCart()
         {

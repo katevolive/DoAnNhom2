@@ -26,6 +26,7 @@ namespace WebBanSua.Controllers
 
         public async Task<IActionResult> ChangePassword(int id)
         {
+            ViewBag.ShowAdminDiv = 1;
             var maKH = HttpContext.Session.GetString("MaKh");
             id = int.Parse(maKH);
             var customerUser = await _context.KhachHangs.FindAsync(id);
@@ -36,6 +37,7 @@ namespace WebBanSua.Controllers
         [HttpPost]
         public IActionResult ChangePassword(KhachHang customer,string inputPasswordNew)
         {
+            ViewBag.ShowAdminDiv = 1;
             if (string.IsNullOrEmpty(inputPasswordNew))
             {
                 ModelState.AddModelError("", "Mật khẩu không được để trống");
@@ -208,6 +210,8 @@ namespace WebBanSua.Controllers
         }
         public IActionResult Logout()
         {
+            GioHangController.isDiscountApplied = false;
+            HttpContext.Session.Remove("GioHang");
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }

@@ -19,6 +19,12 @@ namespace WebBanSua.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            ViewBag.ShowAdminDiv = 1;
+            var cuaHangBanSuaContext = _context.DonHangs.Include(d => d.MaKhNavigation);
+            return View(await cuaHangBanSuaContext.ToListAsync());
+        }
+        public async Task<IActionResult> TongDon()
+        {
             var cuaHangBanSuaContext = _context.DonHangs.Include(d => d.MaKhNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }

@@ -3,28 +3,19 @@
 @model IEnumerable<WebBanSua.Models.DonHang>
 
 @{
+	WebBanSua.Models.CuaHangBanSuaContext _context = new WebBanSua.Models.CuaHangBanSuaContext();
+
 	ViewData["Title"] = "Đơn Mua";
 	Layout = "~/Views/Shared/_ProductLayout.cshtml";
+
     var ShowAdminDiv = ViewBag.ShowAdminDiv as string;
 
 	int pageSize = 5;
-    int currentPage = 1;
-	WebBanSua.Models.CuaHangBanSuaContext _context = new WebBanSua.Models.CuaHangBanSuaContext();
+	var tongDon = _context.DonHangs.Join(_context.KhachHangs, dh => dh.MaKh, kh => kh.MaKh, (dh, kh) => 
+	new { maDh = dh.MaDh, tenKh = kh.TenKh, createDate = dh.NgayTao,tongTien =dh.TongTien});
+    var (ordersToDisplay, totalPages, currentPages) = PaginationHelper.GetPagedItems(tongDon, pageSize, Context);
 
-    if (!string.IsNullOrEmpty(Context.Request.Query["page"]))
-    {
-        int.TryParse(Context.Request.Query["page"], out currentPage);
-    }
-
-    var customerId = Convert.ToInt32(Context.Session.GetString("MaKh"));
-    var orders = _context.DonHangs.Where(x => x.MaKh == customerId)
-                                   .OrderByDescending(x => x.NgayTao)
-                                   .ToList();
-    // Phân trang cho danh sách đơn hàng
-       var (ordersToDisplay, totalPages, currentPages) = PaginationHelper.GetPagedItems(orders, pageSize, Context);
-	   }
-
-@*#28a745*@
+}
 <head>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -59,18 +50,15 @@
 							<a class="list-group-item list-group-item-action" asp-action="ChangePassword" asp-controller="Home" role="tab">
 								<i class='bx bx-lock-alt'></i> Mật Khẩu
 							</a>
-							<a class="list-group-item list-group-item-action active" asp-action="Index" asp-controller="DonHangs" role="tab">
+							<a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="DonHangs" role="tab">
 								<i class='bx bx-shopping-bag'></i> Đơn Mua
 							</a>
-							@if (ViewBag.ShowAdminDiv == 1)
-								{
-									<a class="list-group-item list-group-item-action" asp-action="TongDon" asp-controller="DonHangs" role="tab">
-										<i class='bx bx-home' ></i> Tổng Đơn Mua
-									</a>
-									<a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="Admin" role="tab">
-										<i class='bx bx-home' ></i> Admin
-									</a>
-								}
+							<a class="list-group-item list-group-item-action active" asp-action="DonMua" asp-controller="DonHangs" role="tab">
+								<i class='bx bx-home' ></i> Tổng Đơn Mua
+							</a>
+							<a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="Admin" role="tab">
+								<i class='bx bx-home' ></i> Admin
+							</a>
 							<a class="list-group-item list-group-item-action" asp-action="Logout" asp-controller="Home" role="tab">
 								<i class='bx bx-log-out-circle'></i> Đăng xuất
 							</a>
@@ -97,13 +85,13 @@
 									@foreach (var item in ordersToDisplay)
 									{
 										<tr class="cell-1">
-											<td>@item.MaDh</td>
-											<td>@Context.Session.GetString("TenKh")</td>
+											<td>@item.maDh</td>
+											<td>@item.tenKh</td>
 											<td><span class="badge badge-success">COD - Thanh Toán Khi Nhận</span></td>
-											<td>@item.TongTien.ToString("#,##0") VNĐ</td>
-											<td>@item.NgayTao.ToString("dd/MM/yyyy")</td>
+											<td>@item.tongTien.ToString("#,##0") VNĐ</td>
+											<td>@item.createDate.ToString("dd/MM/yyyy")</td>
 											<td class="align-middle">
-												<a asp-action="Details" asp-route-id="@item.MaDh" class="btn btn-primary" style="font-size:12px;">Xem</a>
+												<a asp-action="Details" asp-route-id="@item.maDh" class="btn btn-primary" style="font-size:12px;">Xem</a>
 											</td>
 										</tr>
 									}
@@ -114,9 +102,9 @@
 							<div class="pull-right">
 								<ul class="pagination pagination-sm pro-page-list">
 									<li><a href="?page=1">«</a></li>
-									@for (int i = 1; i <= (int)Math.Ceiling((double)orders.Count() / pageSize); i++)
+									@for (int i = 1; i <= (int)Math.Ceiling((double)Model.Count() / pageSize); i++)
 									{
-										<li class="@(i == currentPage ? "active" : "")"><a href="?page=@i">@i</a></li>
+										<li class="@(i == currentPages ? "active" : "")"><a href="?page=@i">@i</a></li>
 									}
 									<li><a href="?page=@((int)Math.Ceiling((double)Model.Count() / pageSize))">»</a></li>
 								</ul>
@@ -129,6 +117,7 @@
 			</div>
 		</div>
 	</form>
+</body>
 	<style type="text/css">
 		::-webkit-scrollbar {
 			width: 8px;
@@ -257,4 +246,3 @@
 										myLink.addEventListener('click', function(e) {
 										  e.preventDefault();
 										});</script>
-</body>
