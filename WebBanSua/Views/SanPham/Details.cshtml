@@ -89,21 +89,21 @@
 						<div class="col-sm-4 title-chitiet">THÀNH PHẦN</div>
 						<div class="col-sm-8 content-chitiet">
 						@if (!string.IsNullOrEmpty(Model.MotaSp))
-						{
-							if (Model.MotaSp.Contains("\n"))
 							{
-								string[] paragraphs = Model.MotaSp.Split('\n');
-								foreach (var paragraph in paragraphs)
+								if (Model.MotaSp.Contains("\n"))
 								{
-									<p>@paragraph</p>
+									<div >
+										@foreach (var paragraph in Model.MotaSp.Split('\n'))
+										{
+											<p><span style="color: black;font-family:'Segoe UI'">@paragraph</span></p>
+										}
+									</div>
+								}
+								else
+								{
+									<p style="color: black;font-family:'Segoe UI'">@Model.MotaSp</p>
 								}
 							}
-							else
-							{
-								// Nếu không có dấu xuống dòng, hiển thị chuỗi nguyên thủy
-								@Model.MotaSp
-							}
-						}
 					</div>
 
 					</div>
