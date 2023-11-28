@@ -13,6 +13,7 @@ namespace WebBanSua.Controllers
     {
         private readonly CuaHangBanSuaContext _context;
         public static bool isDiscountApplied = false;
+        public static decimal DiscountAmount = 0m;
 
         public GioHangController(CuaHangBanSuaContext context)
         {
@@ -21,8 +22,30 @@ namespace WebBanSua.Controllers
         public IActionResult Index()
         {
             var listGio = GioHang;
+            ViewBag.IsDiscountApplied = isDiscountApplied;
+            if (isDiscountApplied)
+            {
+                ViewBag.DiscountPerCartItem = DiscountAmount.ToString("#,##0");
+            }
+            else
+            {
+                ViewBag.DiscountPerCartItem = 0m.ToString("#,##0");
+            }
             return View(GioHang);
         }
+        private decimal CalculateDiscountPerCartItem(List<CartItem> gioHang)
+        {
+            decimal DiscountCart = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong);
+            if (DiscountCart > 0)
+            {
+                decimal totalD = DiscountCart * 0.1m;
+                return totalD;
+            }
+
+            return 0m;
+        }
+
+
         public List<CartItem> GioHang
         {
             get
@@ -54,7 +77,11 @@ namespace WebBanSua.Controllers
                 {
                     if (maGiamGia == "GIAMGIA")
                     {
-                        decimal totalDiscount = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong * 0.1m); // 10% giảm giá
+                        decimal totalDiscount100 = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong); // 10% giảm giá
+                        decimal totalDiscount = totalDiscount100 * 0.1m;
+
+                        DiscountAmount = totalDiscount;//test
+
                         int totalAmount = gioHang.Sum(item => item.sanPham.GiaSp * item.soLuong);
                         decimal discountPerCartItem = totalDiscount / totalAmount;
                         foreach (var item in gioHang)
@@ -62,6 +89,9 @@ namespace WebBanSua.Controllers
                             item.sanPham.GiaSp -= (int)(item.sanPham.GiaSp * discountPerCartItem);
                         }
                         isDiscountApplied = true;
+                        ViewBag.IsDiscountApplied= isDiscountApplied;
+
+                        //ViewBag.DiscountPerCartItem = totalDiscount.ToString("#,##0") + " VNĐ";
                         HttpContext.Session.Set<List<CartItem>>("GioHang", gioHang);
                         return Json(new
                         {

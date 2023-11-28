@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Giỏ Hàng";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
+    var DiscountPerCartItem = ViewBag.DiscountPerCartItem as string;
+    bool? IsDiscountApplied = ViewBag.IsDiscountApplied as bool?;
+   
+
+
 }
 
 
@@ -20,7 +25,7 @@
                     <th>Tên Sản Phẩm</th>
                     <th class="text-center">Số Lượng</th>
                     <th class="text-center">Đơn Giá</th>
-                    <th class="text-center">Giảm Giá (Nếu có)</th>
+                    <th class="text-center">Sản phẩm nổi bật</th>
                     <th class="text-center"><a class="btn btn-sm btn-outline-danger" asp-action="CleanCart" asp-controller="GioHang">Xóa tất cả</a></th>
                 </tr>
             </thead>
@@ -63,6 +68,17 @@
                 <button type="button" class="btn btn-outline-primary btn-sm" onclick="applyDiscount()">Áp dụng</button>
             </form>
         </div>
+        @if (ViewBag.IsDiscountApplied)
+            
+        {
+                <div style="width:180px;height: 20px;color: green;" class="coupon-form" role="alert">
+                    Giảm giá 10% đang được áp dụng cho giỏ hàng của bạn.
+                </div>
+            }
+        @if (ViewBag.DiscountPerCartItem != null)
+        {
+            <div class="column text-lg">Được giảm: <span class="text-medium">@(string.IsNullOrEmpty(DiscountPerCartItem) ? "0.000 VNĐ" : DiscountPerCartItem + " VNĐ")</span></div>
+        }
 
         <div class="column text-lg">Tổng tiền: <span class="text-medium">@Model.Sum(x=> x.TongTien).ToString("#,##0") VNĐ</span></div>
     </div>

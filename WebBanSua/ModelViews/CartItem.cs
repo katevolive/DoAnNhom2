@@ -7,7 +7,7 @@ namespace WebBanSua.ModelViews
         public SanPham sanPham { get; set; }
         public int soLuong { get; set; }
         //public double TongTien => soLuong * sanPham.GiaSp;
-        public decimal finalPrice { get; set; }
+        public decimal finalPrice { get; set; } 
         private decimal CalculateFinalPrice()
         {
             decimal giaGiamGia = sanPham.BestSeller ? sanPham.GiaSp * 0.20m : 0;
