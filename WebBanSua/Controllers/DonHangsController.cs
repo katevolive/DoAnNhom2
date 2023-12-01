@@ -19,7 +19,7 @@ namespace WebBanSua.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            ViewBag.ShowAdminDiv = 1;
+            ViewBag.ShowAdminDiv = HomeController.roleId;
             var cuaHangBanSuaContext = _context.DonHangs.Include(d => d.MaKhNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
@@ -42,6 +42,8 @@ namespace WebBanSua.Controllers
             {
                 return NotFound();
             }
+            ViewBag.DiscountAmount = GioHangController.DiscountAmount;
+            ViewBag.IsDiscountApplied = GioHangController.isDiscountApplied;
 
             return View(donHang);
         }

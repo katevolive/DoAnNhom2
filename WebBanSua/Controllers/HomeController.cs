@@ -12,6 +12,8 @@ namespace WebBanSua.Controllers
     public class HomeController : Controller
     {
         private readonly CuaHangBanSuaContext _context;
+        public static int roleId = 1;
+
         public HomeController(CuaHangBanSuaContext context)
         {
             _context = context;
@@ -26,7 +28,7 @@ namespace WebBanSua.Controllers
 
         public async Task<IActionResult> ChangePassword(int id)
         {
-            ViewBag.ShowAdminDiv = 1;
+            ViewBag.ShowAdminDiv = roleId;
             var maKH = HttpContext.Session.GetString("MaKh");
             id = int.Parse(maKH);
             var customerUser = await _context.KhachHangs.FindAsync(id);
@@ -37,7 +39,7 @@ namespace WebBanSua.Controllers
         [HttpPost]
         public IActionResult ChangePassword(KhachHang customer,string inputPasswordNew)
         {
-            ViewBag.ShowAdminDiv = 1;
+            ViewBag.ShowAdminDiv = roleId;
             if (string.IsNullOrEmpty(inputPasswordNew))
             {
                 ModelState.AddModelError("", "Mật khẩu không được để trống");
@@ -75,7 +77,7 @@ namespace WebBanSua.Controllers
                 var accountUser = await _context.Accounts.FirstOrDefaultAsync(a => a.TaiKhoan == customerUser.Email);
                 if (accountUser != null)
                 {
-                    int roleId = accountUser.RoleId;
+                    roleId = accountUser.RoleId;
                     ViewBag.ShowAdminDiv = roleId;
                 }
             }

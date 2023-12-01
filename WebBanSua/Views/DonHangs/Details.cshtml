@@ -74,12 +74,8 @@
                                         <td class="text-end">@Model.TongTien.ToString("#,##0") VNĐ</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">Phí Vận Chuyển</td>
-                                        <td class="text-end">0</td>
-                                    </tr>
-                                    <tr>
                                         <td colspan="2">Giảm Giá</td>
-                                        <td class="text-danger text-end">0</td>
+                                        <td class="text-danger text-end">@ViewBag.DiscountAmount.ToString("#,##0") VNĐ</td>
                                     </tr>
                                     <tr class="fw-bold">
                                         <td colspan="2">Tổng Thanh Toán</td>
