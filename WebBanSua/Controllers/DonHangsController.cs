@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanSua.Models;
+using WebBanSua.ModelViews;
 
 namespace WebBanSua.Controllers
 {
@@ -118,5 +119,35 @@ namespace WebBanSua.Controllers
         {
             return _context.DonHangs.Any(e => e.MaDh == id);
         }
+        [HttpPost]
+        public async Task<IActionResult> HuyDonHang(int id, [FromBody] ConfirmationModel model)
+        {
+            var donHang = await _context.DonHangs.FindAsync(id);
+
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+
+            if (!donHang.TrangThaiHuyDon && model != null && model.Confirm)
+            {
+                try
+                {
+                    donHang.TrangThaiHuyDon = true;
+                    _context.Update(donHang);
+                    await _context.SaveChangesAsync();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"Đã xảy ra lỗi khi hủy đơn hàng: {ex.Message}" });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Đơn hàng đã được hủy trước đó hoặc không xác nhận." });
+            }
+        }
+
     }
 }

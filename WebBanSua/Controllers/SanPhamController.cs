@@ -68,33 +68,39 @@ namespace WebBanSua.Controllers
 
        public async Task<IActionResult> SuaTT()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
 
         public async Task<IActionResult> SuaChua()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
 
         public async Task<IActionResult> BoPhomat()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
         public async Task<IActionResult> NuocGK()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
         public async Task<IActionResult> Kem()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }
         public async Task<IActionResult> SuaHat()
         {
+            ViewBag.IsTinTucPage = "SanPham";
             var cuaHangBanSuaContext = _context.SanPhams.Include(s => s.MaDmNavigation);
             return View(await cuaHangBanSuaContext.ToListAsync());
         }

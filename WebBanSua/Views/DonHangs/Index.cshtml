@@ -17,14 +17,13 @@
     }
 
     var customerId = Convert.ToInt32(Context.Session.GetString("MaKh"));
-    var orders = _context.DonHangs.Where(x => x.MaKh == customerId)
+    var orders = _context.DonHangs.Where(x => x.MaKh == customerId && !x.TrangThaiHuyDon)
                                    .OrderByDescending(x => x.NgayTao)
                                    .ToList();
     // Phân trang cho danh sách đơn hàng
        var (ordersToDisplay, totalPages, currentPages) = PaginationHelper.GetPagedItems(orders, pageSize, Context);
 	   }
 
-@*#28a745*@
 <head>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">

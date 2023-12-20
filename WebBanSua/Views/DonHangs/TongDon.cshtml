@@ -12,7 +12,7 @@
 
 	int pageSize = 5;
 	var tongDon = _context.DonHangs.Join(_context.KhachHangs, dh => dh.MaKh, kh => kh.MaKh, (dh, kh) => 
-	new { maDh = dh.MaDh, tenKh = kh.TenKh, createDate = dh.NgayTao,tongTien =dh.TongTien});
+	new { maDh = dh.MaDh, tenKh = kh.TenKh, createDate = dh.NgayTao,tongTien =dh.TongTien,tTHuyDon=dh.TrangThaiHuyDon});
     var (ordersToDisplay, totalPages, currentPages) = PaginationHelper.GetPagedItems(tongDon, pageSize, Context);
 
 }
@@ -53,7 +53,7 @@
 							<a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="DonHangs" role="tab">
 								<i class='bx bx-shopping-bag'></i> Đơn Mua
 							</a>
-							<a class="list-group-item list-group-item-action active" asp-action="DonMua" asp-controller="DonHangs" role="tab">
+							<a class="list-group-item list-group-item-action active" asp-action="TongDon" asp-controller="DonHangs" role="tab">
 								<i class='bx bx-home' ></i> Tổng Đơn Mua
 							</a>
 							<a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="Admin" role="tab">
@@ -87,7 +87,12 @@
 										<tr class="cell-1">
 											<td>@item.maDh</td>
 											<td>@item.tenKh</td>
-											<td><span class="badge badge-success">COD - Thanh Toán Khi Nhận</span></td>
+											@if(!item.tTHuyDon)
+											{
+												<td><span class="badge badge-success">COD - Thanh Toán Khi Nhận</span></td>
+											}else{
+												<td><span class="badge badge-warning">COD - Thanh Toán Khi Nhận</span></td>
+											}
 											<td>@item.tongTien.ToString("#,##0") VNĐ</td>
 											<td>@item.createDate.ToString("dd/MM/yyyy")</td>
 											<td class="align-middle">

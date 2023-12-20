@@ -52,7 +52,7 @@ namespace WebBanSua.Controllers
                 DonHang donHang = new DonHang();
                 donHang.MaKh = customer.MaKh;
                 donHang.NgayTao = DateTime.Now;
-                donHang.TrangThaiHuyDon = true;
+                donHang.TrangThaiHuyDon = false;
                 donHang.ThanhToan = true;
                 donHang.NgayThanhToan = DateTime.Now;
                 donHang.Note = null;
